@@ -1,0 +1,8 @@
+.navbar {
+  height: 100px;
+  position: sticky;
+}
+
+.navbar-brand {
+  display: contents;
+}
