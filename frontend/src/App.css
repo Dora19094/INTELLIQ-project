@@ -1,2 +1,19 @@
 .App {
+    color: #90b5d9;
+    background-color: #2f3235;
 }
+
+.h5,
+h5{
+    color: #e9c4e9;
+}
+
+p{
+    color: whitesmoke;
+    /*color:#90b5d9;*/
+}
+
+.h1, h1{
+    color:#e9c4e9;
+}
+

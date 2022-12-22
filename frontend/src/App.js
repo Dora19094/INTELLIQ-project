@@ -2,9 +2,12 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import NavigationBar from "./components/NavigationBar";
-import QuestionnaireArea from "./components/QuestionnaireArea";
+import {QuestionnaireArea} from "./pages/QuestionnaireArea";
+
+import "./App.css";
+
 
 function App() {
   return (

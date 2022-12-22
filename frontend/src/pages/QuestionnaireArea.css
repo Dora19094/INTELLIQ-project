@@ -1,0 +1,26 @@
+.questionnaires-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+grid-gap: 40px;
+max-width: 1200px;
+margin: 40px auto;
+}
+
+.questionnaires-grid .div-card {
+background: #fff;
+color: #333;
+padding: 20px;
+border-radius: 4px;
+box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+transition: all 0.3s ease;
+position: relative;
+}
+
+.questionnaires-grid .div-card:hover {
+transform: rotate(3deg);
+}
+
+.questionnaires-grid .div-card h3 {
+color: #555;
+margin-bottom: 6px;
+}
