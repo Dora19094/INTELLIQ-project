@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-
+import {Link} from "react-router-dom";
+import Button from "react-bootstrap/Button";
 // style
+import logo from "../logo.svg";
 import "./QuestionnaireArea.css";
 
 
@@ -30,6 +32,13 @@ export function QuestionnaireArea() {
       {questionnaires.map((questionnaire) => (
         <div className="div-card" key={questionnaire.questionnaireID}>
           <h3>{questionnaire.questionnaireTitle}</h3>
+          <Button
+                as={Link}
+                to={`/questionnaires/${questionnaire.questionnaireID}`}
+                variant="primary"
+              >
+                Answer it
+              </Button>
         </div>
       ))}
     </div>
