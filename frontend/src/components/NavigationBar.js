@@ -7,7 +7,7 @@ import "./NavigationBar.css";
 
 export default function NavigationBar() {
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar bg="dark" variant="dark" sticky="top">
       <Navbar.Brand as={Link} to="home">
         <img src={logo} width="64" height="64" alt="" />
         <h1> IntelliQ </h1>
