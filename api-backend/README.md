@@ -1,3 +1,3 @@
-To run app for first time:
+To run app for first time:\
 npm install \
 nodemon index
