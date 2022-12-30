@@ -1,17 +1,20 @@
 .App {
-    color: #90b5d9;
-    background-color: #2f3235;
-    height: 100vh;
+  /* color: #9aa0b0; */
+  background-color: white;
+  height: 100vh;
 }
 
-h5{
-    color: #e9c4e9;
+h5 {
+  /* color: #ad91ad; */
+  color: darkslateblue;
 }
 
-p{
-    color: whitesmoke;
+p {
+  color: #d2bed2;
+  /* color: bisque; */
 }
 
-h1{
-    color:#e9c4e9;
+h1 {
+  /* color: #a14da1; */
+  color: darkslateblue;
 }

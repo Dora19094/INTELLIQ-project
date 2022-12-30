@@ -1,6 +1,10 @@
 .navbar {
   height: 100px;
   position: sticky;
+  /* background-color: #a14da1; */
+  background-color: whitesmoke;
+  color: whitesmoke;
+  /* bg="dark" variant="dark" */
 }
 
 .navbar-brand {

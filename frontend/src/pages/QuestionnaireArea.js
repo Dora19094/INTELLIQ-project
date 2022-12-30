@@ -28,15 +28,25 @@ export function QuestionnaireArea() {
     <div className="questionnaires-grid">
       {questionnaires.map((questionnaire) => (
         <div className="div-card" key={questionnaire.questionnaireID}>
-          <img src={logo} alt="" />
+          <div className="d-flex justify-content-center">
+            <img
+              src={logo}
+              width="64"
+              height="64"
+              vertical-align="middle"
+              alt=""
+            />
+          </div>
           <h3>{questionnaire.questionnaireTitle}</h3>
-          <Button
-            as={Link}
-            to={`/questionnaires/${questionnaire.questionnaireID}`}
-            variant="primary"
-          >
-            Answer it
-          </Button>
+          <div class="d-flex justify-content-end">
+            <Button
+              as={Link}
+              to={`/questionnaires/${questionnaire.questionnaireID}`}
+              variant="primary"
+            >
+              Answer it
+            </Button>
+          </div>
         </div>
       ))}
     </div>

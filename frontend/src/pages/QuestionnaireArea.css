@@ -1,26 +1,46 @@
 .questionnaires-grid {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-grid-gap: 40px;
-max-width: 1200px;
-margin: 40px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 40px;
+  max-width: 1200px;
+  margin: 40px auto;
 }
 
 .questionnaires-grid .div-card {
-background: #fff;
-color: #333;
-padding: 20px;
-border-radius: 4px;
-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-transition: all 0.3s ease;
-position: relative;
+  background: whitesmoke;
+  color: #333;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .questionnaires-grid .div-card:hover {
-transform: rotate(3deg);
+  transform: rotate(3deg);
 }
 
 .questionnaires-grid .div-card h3 {
-color: #555;
-margin-bottom: 6px;
+  color: rgb(86, 61, 78);
+  margin-bottom: 6px;
+}
+
+.btn-primary {
+  background-color: darkslateblue;
+  border: darkslateblue;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:active:focus {
+  color: whitesmoke;
+  background-color: #d2bed2;
+  border-color: #d2bed2;
+  text-align: center;
+  position: relative;
 }
