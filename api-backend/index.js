@@ -22,9 +22,25 @@ app.use(bodyParser.json())
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));
 
-app.use('/admin',require('./routes/intelliQ.js'));
+//intelliQ routes
+//app.use('/admin',require('./routes/intelliQ.js'));
 
-//middleware for error handling
+//error handling
+app.all('*',(req,res,next)=>{
+    try{
+        throw new Error('Wrong URI or Wrong Method')
+    } catch(err){next(err)}
+});
+
+//middleware for Bad request handling
+app.use((err,req,res,next)=>{
+    console.log(`error ${err.message}`);
+    const status = err.status || 400;
+    res.status(status).send({error:err.message})
+});
+
+
+
 
 
 
