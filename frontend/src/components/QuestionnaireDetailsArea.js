@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 
 export function QuestionnaireDetailsArea() {
   const [questionnaire, setQuestionnare] = useState();
   const { questionnaireID } = useParams();
-
-  // const url = `http://localhost:3001/questionnaires/${questionnaireID}`;
-  const url = `http://localhost:3001/questionnaires?questionnaireID=${questionnaireID}`;
-  // const data = fetch(url).then((response) => response.json());
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // const url = `http://localhost:3001/questionnaires/${questionnaireID}`;
+    const url = `http://localhost:3001/questionnaires?questionnaireID=${questionnaireID}`;
+    // const data = fetch(url).then((response) => response.json());
     const fetchData = async () => {
       await fetch(url)
         .then((response) => response.json())
@@ -22,11 +22,22 @@ export function QuestionnaireDetailsArea() {
     if (questionnaire) {
       console.log(questionnaire);
       console.log(questionnaire[0].questionnaireID);
-    }
+    } // we add [0] because resource is & returns a list
   }, []);
 
-  function fetchQuestion(question) {
+  function fetchQuestion(questionnaire) {
     // const url = `http://localhost:3001/questionnaires/${questionnaire.questionnaireID}/${questionnaire.qID}}`;
+    const paramQuestionnaireID = questionnaire.questionnaireID;
+    const temp = questionnaire.questions[0];
+    // there was a space on "qID " on json-server so we added one here too.
+    const paramQuestionID = temp["qID "];
+
+    navigate(`/question/${paramQuestionnaireID}/${paramQuestionID}`, {
+      state: {
+        questionnaireID: paramQuestionnaireID,
+        questionID: paramQuestionID,
+      },
+    });
   }
 
   return (
@@ -64,16 +75,19 @@ export function QuestionnaireDetailsArea() {
                   ).length
                 }
               </Card.Text>
-              <div className="d-flex justify-content-center">
+              <div
+                id="str-btn-details"
+                className="d-flex justify-content-center"
+              >
                 <Button
                   style={{
-                    /* darkslateblue 483d8b*/
                     background: "#d2bed2",
                     border: "#d2bed2",
                     color: "white",
                     position: "relative",
                   }}
-                  variant="secondary"
+                  // as={Link}
+                  // to={`/question/${questionnaire[0].questionnaireID}/${questionnaire[0].questions[0].qID}`}
                   onClick={() => fetchQuestion(questionnaire[0])}
                 >
                   Start

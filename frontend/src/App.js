@@ -4,10 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NavigationBar from "./components/NavigationBar";
-import {QuestionnaireArea} from "./pages/QuestionnaireArea";
-import {QuestionnaireDetailsArea} from "./components/QuestionnaireDetailsArea";
+import { QuestionnaireArea } from "./pages/QuestionnaireArea";
+import { QuestionnaireDetailsArea } from "./components/QuestionnaireDetailsArea";
 import "./App.css";
-
+import QuestionArea from "./components/QuestionArea";
 
 function App() {
   return (
@@ -22,13 +22,10 @@ function App() {
             path="/questionnaires/:questionnaireID"
             element={<QuestionnaireDetailsArea />}
           />
-
-          {/* In next Step i have to implement following Routes */}
-
-          {/*<Route
+          <Route
             path="/question/:questionnaireID/:questionID"
             element={<QuestionArea />}
-          /> */}
+          />
         </Routes>
       </BrowserRouter>
     </div>

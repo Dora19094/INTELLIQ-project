@@ -38,7 +38,7 @@ export function QuestionnaireArea() {
             />
           </div>
           <h3>{questionnaire.questionnaireTitle}</h3>
-          <div class="d-flex justify-content-end">
+          <div className="d-flex justify-content-end">
             <Button
               as={Link}
               to={`/questionnaires/${questionnaire.questionnaireID}`}
