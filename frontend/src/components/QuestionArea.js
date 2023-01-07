@@ -6,8 +6,10 @@ export default function QuestionArea() {
   const [questionData, setQuestionData] = useState();
 
   useEffect(() => {
-    //
+    // the following url is the right one for the final API Backend
     // const url = `http://localhost:3001/questions?questionnaireID=${state.questionnaireID}?questionID=${state.questionID}`;
+
+    // due to json-server, cannot simulate the right url so i tested the following one
     const url = `http://localhost:3001/questions?qID=${state.questionID}`;
 
     const fetchData = async () => {
