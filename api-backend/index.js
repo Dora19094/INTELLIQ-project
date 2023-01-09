@@ -17,13 +17,13 @@ mongoose.connect('mongodb://127.0.0.1/intelliQ')
 mongoose.Promise = global.Promise;
 
 //middleware for accesing data in json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));
 
 //intelliQ routes
-//app.use('/admin',require('./routes/intelliQ.js'));
+app.use(require('./routes/intelliQ.js'));
 
 //error handling
 app.all('*',(req,res,next)=>{
