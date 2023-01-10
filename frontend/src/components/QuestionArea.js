@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import AnswerArea from "./AnswerArea";
 
 export default function QuestionArea() {
   const { state } = useLocation();
@@ -20,5 +22,21 @@ export default function QuestionArea() {
 
     fetchData();
   }, []);
-  return <>{questionData && <div>{questionData[0].qtext}</div>}</>;
+  return (
+    <>
+      {questionData && (
+        <div style={{ margin: "40px" }}>
+          <Card>
+            <Card.Body>
+              <Card.Title style={{ marginBottom: "15px" }}>
+                {`Question .${state.questionNum} - Type: ${questionData[0].type}`}
+              </Card.Title>
+              <Card.Text>{questionData[0].qtext}</Card.Text>
+            </Card.Body>
+          </Card>
+          <AnswerArea question={questionData[0]}></AnswerArea>
+        </div>
+      )}
+    </>
+  );
 }
