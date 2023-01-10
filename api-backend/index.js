@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+//const { createServer } = require('http');
 
 //setup express app
 const app = express();
@@ -9,12 +13,25 @@ const app = express();
 mongoose.connect('mongodb://127.0.0.1/intelliQ')
     .then(result=>{
         console.log('Connected to DB');
-        app.listen(3000,()=>{
-            console.log('Start listening on port 3000');
-        });
     })
     .catch(err=>console.log(err))
 mongoose.Promise = global.Promise;
+
+
+const sslServer = https.createServer({
+    key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
+    cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
+},app)
+
+sslServer.listen(3000,()=>{
+    console.log("Server is running on port 3000");
+})
+
+/*
+app.listen(3000,()=>{
+    console.log('Start listening on port 3000');
+});
+*/
 
 //middleware for accesing data in json
 app.use(bodyParser.json());
@@ -38,6 +55,3 @@ app.use((err,req,res,next)=>{
     const status = err.status || 400;
     res.status(status).send({error:err.message})
 });
-
-
-

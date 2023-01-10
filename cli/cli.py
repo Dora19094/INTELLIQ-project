@@ -4,12 +4,12 @@ import requests
 def error_code_handler(code):
     print(code)
 
-baseurl = 'http://localhost:3000'
+baseurl = 'https://localhost:3000'
 # Admin
 def health_check():
     print('work in progress healthcheck')
     url = baseurl + '/admin/healthcheck'
-    x = requests.get(url)
+    x = requests.get(url,verify=False)
     code = x.status_code
     error_code_handler(code)
     res = x.json()
