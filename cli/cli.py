@@ -4,7 +4,7 @@ import requests
 def error_code_handler(code):
     print(code)
 
-baseurl = 'https://localhost:91003/intelliq_api'
+baseurl = 'localhost:3000/admin/healthcheck'
 
 def health_check():
     print('work in progress healthcheck')

@@ -18,7 +18,7 @@ router.get('/healthcheck',(req,res,next)=>{
 
 //2
 router.post('/questionnaire_udp',(req,res,next)=>{
-    res.send({function: "questionnaire upload"});
+    res.send(req);
 });
 
 //3
