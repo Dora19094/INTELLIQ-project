@@ -4,19 +4,19 @@ import requests
 def error_code_handler(code):
     print(code)
 
-baseurl = 'localhost:3000/admin/healthcheck'
-
+baseurl = 'http://localhost:3000'
+# Admin
 def health_check():
     print('work in progress healthcheck')
     url = baseurl + '/admin/healthcheck'
     x = requests.get(url)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
+    res = x.json()
     print(res)
 
 def questionnaire_upd( file_address):
-    if file_address == 'default':
+    if file_address == '/admin/default':
         print('argument --source was not given')
         return
     print('will upload file in ' + file_address)
@@ -28,11 +28,11 @@ def questionnaire_upd( file_address):
     
 def reset_all():
     print('work in progress resetall')
-    url = baseurl + '/resetall'
+    url = baseurl + '/admin/resetall'
     x = requests.post(url)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
+    res = x.json()
     print(res)
 
 def reset_q( id ):
@@ -44,10 +44,10 @@ def reset_q( id ):
     x = requests.post(url)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
+    res = x.json()
     print(res)
-
-def get_questionnaire( id):
+# IntelliQ
+def get_questionnaire(id):
     if id == 'default':
         print('argument --questionnaire_id was not given')
         return
