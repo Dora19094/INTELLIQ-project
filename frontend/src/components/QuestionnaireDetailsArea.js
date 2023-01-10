@@ -36,6 +36,7 @@ export function QuestionnaireDetailsArea() {
       state: {
         questionnaireID: paramQuestionnaireID,
         questionID: paramQuestionID,
+        questionNum: 1,
       },
     });
   }
