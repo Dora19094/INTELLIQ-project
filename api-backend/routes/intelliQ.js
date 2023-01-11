@@ -68,13 +68,20 @@ router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', fu
         let new_ans = new Answers.AnswerOne();
         new_ans.qID = req.params.questionID;
         new_ans.ans = req.params.optionID;
-        data[0].answers.push({qID:req.params.questionID, ans: req.params.optionID});
-        data[0].save();    //it creates an _id for that object which we will ignore
+        data[0].answers.push(new_ans);
+        data[0].save().catch(err=>res.send({status:"failed", reason:err.message}));    //it creates an _id for that object which we will ignore
         res.send();
     })
     .catch(err=>res.send({status:"failed", reason:err.message}));
 
 });
+
+//fourth required endpoint
+
+
+
+
+//fifth required endpoint 
 
 
 
