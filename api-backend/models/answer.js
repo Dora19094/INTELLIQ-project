@@ -15,6 +15,7 @@ const AnswerSchema = new Schema({
         type: String,
         required: [true, "Questionnaire ID is required"]
     },
+    session : String,
     answers: {
         type: [AnswerOneSchema]
     }
