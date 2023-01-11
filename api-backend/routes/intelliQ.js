@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const BlankSchema = require('../models/blank.js');
 const _ = require('lodash');
 const { findById } = require('../models/blank.js');
-const AnswerSchema = require('../answer.js');
+const AnswerSchema = require('../models/answer.js');
 //var omit = require('object.omit');
 //const Question = require('../models/blank.js');
 
@@ -64,10 +64,11 @@ router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next)
 
 //third required endpoint
 router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
-    AnswerSchema
-
-    
-    //.catch(err=>res.send({status:"failed", reason:err.message}))
+    AnswerSchema.find({questionnaireId : req.params.questionnaireID, session : req.params.session})
+    .then(function(data){
+        res.send(data)
+    })
+    .catch(err=>res.send({status:"failed", reason:err.message}));
 
 });
 
