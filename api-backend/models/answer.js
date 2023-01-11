@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
+
 const AnswerOneSchema = new Schema({
     qID:{
         type: String
     },  
-    ans:{
-        type: String
-    }
+    ans: String
 });
 
 const AnswerSchema = new Schema({
@@ -22,4 +22,5 @@ const AnswerSchema = new Schema({
 });
 
 const Answer = mongoose.model('Answer', AnswerSchema);
-module.exports = Answer;
+const AnswerOne = mongoose.model('AnswerOne', AnswerOneSchema);
+module.exports = {Answer,AnswerOne};

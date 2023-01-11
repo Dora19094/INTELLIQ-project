@@ -5,24 +5,23 @@ const mongoose = require('mongoose');
 const BlankSchema = require('../models/blank.js');
 const _ = require('lodash');
 const { findById } = require('../models/blank.js');
-const AnswerSchema = require('../models/answer.js');
-//var omit = require('object.omit');
-//const Question = require('../models/blank.js');
+const Answers = require('../models/answer.js');
+
 
 
 // it sends all the questions of a specific questionnaire
-router.get('/questionnaire/:questionnaireID/only_questions', function(req, res, next){
-    BlankSchema.find({_id :req.params.questionnaireID},'questions')
-    .then(function(data){ 
-        let all_questions = _.map(_.flatMap(data,'questions'),'qtext');
-       // console.log(all_questions);
-        res.send(all_questions);
-    })
-    .catch(err=>res.send({status:"failed", reason:err.message}))
-});
+// router.get('/questionnaire/:questionnaireID/only_questions', function(req, res, next){
+//     BlankSchema.find({_id :req.params.questionnaireID},'questions')
+//     .then(function(data){ 
+//         let all_questions = _.map(_.flatMap(data,'questions'),'qtext');
+//        // console.log(all_questions);
+//         res.send(all_questions);
+//     })
+//     .catch(err=>res.send({status:"failed", reason:err.message}))
+// });
 
 // 1. first required endpoint
-router.get('/questionnaire/:questionnaireID', function(req, res, next){ 
+router.get('/questionnaire/:questionnaireID', function(req, res, next){ //needs to update for csv format
     BlankSchema.find({_id :req.params.questionnaireID})
     .then(function(data){ 
         const sorted_questions = _.flatMap(data,'questions');
@@ -40,7 +39,7 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
 });
 
 //2. Second required endpoint
-router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next){
+router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next){ //need to update for csv format
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
         let questions = _.flatMap(data,'questions');
@@ -64,12 +63,19 @@ router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next)
 
 //third required endpoint
 router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
-    AnswerSchema.find({questionnaireId : req.params.questionnaireID, session : req.params.session})
+    Answers.Answer.find({questionnaireId : req.params.questionnaireID, session : req.params.session},'answers')
     .then(function(data){
-        res.send(data)
+        let new_ans = new Answers.AnswerOne();
+        new_ans.qID = req.params.questionID;
+        new_ans.ans = req.params.optionID;
+        data[0].answers.push({qID:req.params.questionID, ans: req.params.optionID});
+        data[0].save();    //it creates an _id for that object which we will ignore
+        res.send();
     })
     .catch(err=>res.send({status:"failed", reason:err.message}));
 
 });
+
+
 
 module.exports = router;
