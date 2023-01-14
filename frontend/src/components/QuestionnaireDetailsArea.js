@@ -7,6 +7,10 @@ export function QuestionnaireDetailsArea() {
   const { questionnaireID } = useParams();
   const navigate = useNavigate();
 
+  function createRandomString() {
+    return "xyzw";
+  }
+
   useEffect(() => {
     // const url = `http://localhost:3001/questionnaires/${questionnaireID}`;
     const url = `http://localhost:3001/questionnaires?questionnaireID=${questionnaireID}`;
@@ -37,6 +41,7 @@ export function QuestionnaireDetailsArea() {
         questionnaireID: paramQuestionnaireID,
         questionID: paramQuestionID,
         questionNum: 1,
+        session: createRandomString(),
       },
     });
   }

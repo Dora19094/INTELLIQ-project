@@ -21,7 +21,8 @@ export default function QuestionArea() {
     };
 
     fetchData();
-  }, []);
+    // console.log(questionData);
+  }, [state.questionID]);
   return (
     <>
       {questionData && (
@@ -34,7 +35,11 @@ export default function QuestionArea() {
               <Card.Text>{questionData[0].qtext}</Card.Text>
             </Card.Body>
           </Card>
-          <AnswerArea question={questionData[0]}></AnswerArea>
+          <AnswerArea
+            question={questionData[0]}
+            questionNum={state.questionNum}
+            session={state.session}
+          ></AnswerArea>
         </div>
       )}
     </>
