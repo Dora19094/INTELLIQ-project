@@ -6,33 +6,32 @@ const BlankSchema = require('../models/blank.js');
 const _ = require('lodash');
 const { findById } = require('../models/blank.js');
 const Answers = require('../models/answer.js');
-
-
-
-// it sends all the questions of a specific questionnaire
-// router.get('/questionnaire/:questionnaireID/only_questions', function(req, res, next){
-//     BlankSchema.find({_id :req.params.questionnaireID},'questions')
-//     .then(function(data){ 
-//         let all_questions = _.map(_.flatMap(data,'questions'),'qtext');
-//        // console.log(all_questions);
-//         res.send(all_questions);
-//     })
-//     .catch(err=>res.send({status:"failed", reason:err.message}))
-// });
+const json2csv = require('json2csv');
 
 // 1. first required endpoint
-router.get('/questionnaire/:questionnaireID', function(req, res, next){ //needs to update for csv format
+router.get('/questionnaire/:questionnaireID', function(req, res, next){ 
     BlankSchema.find({_id :req.params.questionnaireID})
     .then(function(data){ 
         const sorted_questions = _.flatMap(data,'questions');
         sorted_questions.sort(function(a,b){
             return a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()); 
         });
+        let jdata = {questionnaireID : data[0]._id,                         
+                    questionnaireTitle: data[0].questionnaireTitle,
+                    keywords : data[0].keywords,
+                    questions: sorted_questions};
 
-        res.send({_id : data[0]._id,                           //maybe find nicer way to export the data (with key replace)
-            questionnaireTitle: data[0].questionnaireTitle,
-            keywords : data[0].keywords,
-            questions: sorted_questions});
+        if (req.query.format == "json" || req.query.format == null) res.send(jdata);
+        else if (req.query.format == "csv") 
+        {
+            const csvdata = json2csv.parse(jdata);
+            res.attachment('jdata.csv');
+            res.status(200).send(csvdata);
+        }
+        else 
+        {
+            throw new Error('Format has to be set to either json or csv!');
+        }
         
     })
     .catch(err=>res.send({status:"failed", reason:err.message}))
@@ -47,14 +46,25 @@ router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next)
         let options = _.flatMap(question,'options').sort(function(a,b){
             return a.optID.toLowerCase().localeCompare(b.optID.toLowerCase());
         });
-        
-        res.send({
-            _id : question[0]._id,
+        let jdata = {
+            questionnaireID : req.params.questionnaireID,
             qID : question[0].qID,
             qtext : question[0].qtext,
             type : question[0].type,
             options : options
-        });
+        };
+        if (req.query.format == "json" || req.query.format == null) res.send(jdata);
+        else if (req.query.format == "csv") 
+        {
+            const csvdata = json2csv.parse(jdata);
+            res.attachment('jdata.csv');
+            res.status(200).send(csvdata);
+        }
+        else 
+        {
+            throw new Error('Format has to be set to either json or csv!');
+        }
+        
     })
     .catch(err=>res.send({status:"failed", reason:err.message}))
 
