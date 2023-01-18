@@ -42,7 +42,8 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
         }
         
     })
-    .catch(err=>res.send({status:"failed", reason:err.message}))
+    //.catch(err=>res.send({status:"failed", reason:err.message}))
+    .catch(err=>next(err));
 });
 
 //2. Second required endpoint
@@ -83,8 +84,8 @@ router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next)
         }
         
     })
-    .catch(err=>res.send({status:"failed", reason:err.message}))
-
+    //.catch(err=>res.send({status:"failed", reason:err.message}))
+    .catch(err=>next(err));
 });
 
 
@@ -99,8 +100,8 @@ router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', fu
         data[0].save().catch(err=>res.send({status:"failed", reason:err.message}));    //it creates an _id for that object/we ignore for now
         res.send();
     })
-    .catch(err=>res.send({status:"failed", reason:err.message}));
-
+    //.catch(err=>res.send({status:"failed", reason:err.message}));
+    .catch(err=>next(err));
 });
 
 //fourth required endpoint

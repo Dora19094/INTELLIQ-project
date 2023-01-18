@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-//const { createServer } = require('http');
 
 //setup express app
 const app = express();
@@ -23,27 +22,31 @@ const sslServer = https.createServer({
     cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
 },app)
 
+
 sslServer.listen(3000,()=>{
     console.log("Server is running on port 3000");
 })
 
+
 //middleware for accesing data in json
 app.use(bodyParser.json());
+
 
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));
 
+
 //intelliQ routes
 app.use(require('./routes/intelliQ.js'));
 
-//error handling
+//errors from bad requests
 app.all('*',(req,res,next)=>{
     try{
         throw new Error('Wrong URI or Wrong Method')
     } catch(err){next(err)}
 });
 
-//middleware for Bad request handling
+//middleware for error handling
 app.use((err,req,res,next)=>{
     console.log(`error ${err.message}`);
     const status = err.status || 400;
