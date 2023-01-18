@@ -27,12 +27,6 @@ sslServer.listen(3000,()=>{
     console.log("Server is running on port 3000");
 })
 
-/*
-app.listen(3000,()=>{
-    console.log('Start listening on port 3000');
-});
-*/
-
 //middleware for accesing data in json
 app.use(bodyParser.json());
 
@@ -53,5 +47,5 @@ app.all('*',(req,res,next)=>{
 app.use((err,req,res,next)=>{
     console.log(`error ${err.message}`);
     const status = err.status || 400;
-    res.status(status).send({error:err.message})
+    res.status(status).send({status:"Failed",error:err.message})
 });
