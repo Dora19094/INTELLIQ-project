@@ -23,17 +23,13 @@ router.post('/questionnaire_udp',(req,res,next)=>{
 });
 
 //3
-//what status should be returned when there are no documents to delete?
 router.post('/resetall',(req,res,next)=>{
     Answers.Answer.deleteMany({})
         .then(Blank.deleteMany({}).then(res.send({status:"OK"})))
         .catch(err=>next(err));
 });
 
-
-
 //4
-//what status should be returned when there are no documents to delete?
 router.post('/resetq/:questionnaireID',(req,res,next)=>{
     Answers.Answer.find({'questionnaireID':req.params.questionnaireID}).deleteMany()
         .then((returned)=>{
@@ -41,7 +37,6 @@ router.post('/resetq/:questionnaireID',(req,res,next)=>{
             else {throw new Error('No more answers to be deleted with this questionnaireID')}
         })
         .catch(err=>next(err));
-        //.catch(err=>res.send({status:"failed", reason:err.message}));
 });
 
 module.exports = router;
