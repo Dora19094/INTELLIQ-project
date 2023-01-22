@@ -7,8 +7,9 @@ export function QuestionnaireDetailsArea() {
   const { questionnaireID } = useParams();
   const navigate = useNavigate();
 
-  function createRandomString() {
-    return "xyzw";
+  function createRandomString(max) {
+    return Math.floor(Math.random() * max) + 1000;
+    // return "xyzw";
   }
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export function QuestionnaireDetailsArea() {
         questionnaireID: paramQuestionnaireID,
         questionID: paramQuestionID,
         questionNum: 1,
-        session: createRandomString(),
+        session: createRandomString(9999),
       },
     });
   }
@@ -86,10 +87,11 @@ export function QuestionnaireDetailsArea() {
                 className="d-flex justify-content-center"
               >
                 <Button
+                  variant="primary"
                   style={{
-                    background: "#d2bed2",
-                    border: "#d2bed2",
-                    color: "white",
+                    // background: "#d2bed2",
+                    //border: "#d2bed2",
+                    // color: "white",
                     position: "relative",
                   }}
                   // as={Link}
