@@ -8,6 +8,7 @@ const { findById } = require('../models/blank.js');
 const Answers = require('../models/answer.js');
 const json2csv = require('json2csv');
 
+
 // 1. first required endpoint
 router.get('/questionnaire/:questionnaireID', function(req, res, next){ 
     BlankSchema.find({_id :req.params.questionnaireID})
@@ -101,6 +102,17 @@ router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', fu
         res.send();
     })
     //.catch(err=>res.send({status:"failed", reason:err.message}));
+    .catch(err=>next(err));
+});
+
+//Endpoint that returns all the questionnaires in the db
+router.get('/questionnaires', function(req, res, next){ 
+    BlankSchema.find()
+    .then(function(data){
+        if (data == {}) res.send("No questionnaires have been saved!");
+        else  
+        res.send(data);
+    })
     .catch(err=>next(err));
 });
 
