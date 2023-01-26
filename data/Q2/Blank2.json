@@ -1,0 +1,280 @@
+[{
+    "questionnaireTitle": "Online Shopping attitudes",
+    "keywords": [
+      "shopping",
+      "eshops",
+      "ecommerce website",
+      "online shopping"
+    ],
+    "questions": [
+      {
+        "qID": "P00",
+        "qtext": "Ποιό είναι το mail σας ;",
+        "required": false,
+        "type": "profile",
+        "options": [
+          {
+            "optID": "P00TXT",
+            "opttxt": "<open string>",
+            "nextqID": "P01"
+          }
+        ]
+      },
+      {
+        "qID": "P01",
+        "qtext": "Ποια είναι η ηλικία σας;",
+        "required": true,
+        "type": "profile",
+        "options": [
+          {
+            "optID": "P01A1",
+            "opttxt": "<20",
+            "nextqID": "Q01"
+          },
+          {
+            "optID": "P01A2",
+            "opttxt": "20-40",
+            "nextqID": "Q01"
+          },
+          {
+            "optID": "P01A3",
+            "opttxt": ">40",
+            "nextqID": "P02"
+          }
+        ]
+      },
+      {
+        "qID": "P02",
+        "qtext": "Πόσο εύκολη είναι η χρήση του υπολογιστή για εσάς ;",
+        "required": true,
+        "type": "profile",
+        "options": [
+          {
+            "optID": "P02A1",
+            "opttxt": "Αρκετά εύκολη",
+            "nextqID": "Q01"
+          },
+          {
+            "optID": "P02A2",
+            "opttxt": "Όχι και τόσο εύκολη",
+            "nextqID": "Q01"
+          },
+          {
+            "optID": "P02A3",
+            "opttxt": "Καθόλου εύκολη",
+            "nextqID": "Q01"
+          }
+        ]
+      },
+      {
+        "qID": "Q01",
+        "qtext": "Πόσο συχνά αγοράζετε προϊόντα μέσω διαδικτύου ;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q01A1",
+            "opttxt": "Συνήθως πάνω απο μία φορά τον μήνα",
+            "nextqID": "Q02"
+          },
+          {
+            "optID": "Q01A2",
+            "opttxt": "Λίγες φορές τον χρόνο",
+            "nextqID": "Q03"
+          },
+          {
+            "optID": "Q01A3",
+            "opttxt": "Σπάνια",
+            "nextqID": "Q03"
+          }
+        ]
+      },
+      {
+        "qID": "Q02",
+        "qtext": "Με δεδομένο ότι απαντήσατε [*Q01A1] στην ερώτηση [*Q01]: Τι είδους προϊόντα αγοράζετε κυρίως ;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q02A1",
+            "opttxt": "Ενδύματα και κοσμήματα",
+            "nextqID": "Q04"
+          },
+          {
+            "optID": "Q02A2",
+            "opttxt": "Έπιπλα και οικιακά προϊόντα",
+            "nextqID": "Q04"
+          },
+          {
+            "optID": "Q02A3",
+            "opttxt": "Τρόφιμα και Ροφήματα",
+            "nextqID": "Q04"
+          },
+          {
+            "optID": "Q02A4",
+            "opttxt": "Άλλο",
+            "nextqID": "Q04"
+          }
+        ]
+      },
+      {
+        "qID": "Q03",
+        "qtext": "Ποιές είναι οι αμφιβολίες σας για την αγορά προϊόντων μέσω διαδικτύου ;",
+        "required": false,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q03TXT",
+            "opttxt": "<open string>",
+            "nextqID": "Q04"
+          }
+        ]
+      },
+      {
+        "qID": "Q04",
+        "qtext": "Πόσο ασφαλής αισθάνεστε να αγοράζετε προϊόντα μέσω διαδικτύου απο εταιρία που γνωρίζετε ;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q04A1",
+            "opttxt": "Όχι αρκετά",
+            "nextqID": "Q05"
+          },
+          {
+            "optID": "Q04A2",
+            "opttxt": "Αρκετά ασφαλής",
+            "nextqID": "Q06"
+          }
+        ]
+      },
+      {
+        "qID": "Q05",
+        "qtext": "Με δεδομένο ότι απαντήσατε [*Q04A1] στην ερώτηση [*Q04]: Σε ποιούς τομείς θεωρείτε αναξιόπιστες τις διαδικτυακές αγορές ;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q05A1",
+            "opttxt": "Στην ασφάλεια των προσωπικών δεδομένων του πελάτη",
+            "nextqID": "Q06"
+          },
+          {
+            "optID": "Q05A2",
+            "opttxt": "Στην επιτυχή και γρήγορη παράδοση των προϊόντων",
+            "nextqID": "Q06"
+          },
+          {
+            "optID": "Q05A3",
+            "opttxt": "Στην δυνατότητα επιστροφής χρημάτων σε περίπτωση ελαττωματικού προϊόντος",
+            "nextqID": "Q06"
+          }
+        ]
+      },
+      {
+        "qID": "Q06",
+        "qtext": "Πόσο σημαντική για την αξιοπιστία του καταστήματος θεωρείτε την εικόνα της ιστοσελίδας του στο διαδίκτυο ;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q06A1",
+            "opttxt": "Σημαντική",
+            "nextqID": "Q07"
+          },
+          {
+            "optID": "Q06A2",
+            "opttxt": "Ούτε σημαντική ούτε αδιάφορη",
+            "nextqID": "Q07"
+          },
+          {
+            "optID": "Q06A3",
+            "opttxt": "Αδιάφορη",
+            "nextqID": "Q07"
+          }
+        ]
+      },
+      {
+        "qID": "Q07",
+        "qtext": "Ποιά μέθοδο πληρωμής χρησιμοποιείτε στις περισσότερες online αγορές σας ;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q07A1",
+            "opttxt": "Πιστωτική ή χρεωστική κάρτα",
+            "nextqID": "Q08"
+          },
+          {
+            "optID": "Q07A2",
+            "opttxt": "Αντικαταβολή",
+            "nextqID": "Q08"
+          },
+          {
+            "optID": "Q07A3",
+            "opttxt": "Κατάθεση σε τραπεζικό λογαριασμό",
+            "nextqID": "Q08"
+          }
+        ]
+      },
+      {
+        "qID": "Q08",
+        "qtext": "Έχουν υποκλαπεί ποτέ τα στοιχεία πληρωμής σας;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q08A1",
+            "opttxt": "Όχι, από όσο γνωρίζω",
+            "nextqID": "Q10"
+          },
+          {
+            "optID": "Q08A2",
+            "opttxt": "Ναι",
+            "nextqID": "Q09"
+          }
+        ]
+      },
+      {
+        "qID": "Q09",
+        "qtext": "Με δεδομένο ότι απαντήσατε [*Q08A2] στην ερώτηση [*Q08]: Θα πραγματοποιούσατε πάλι αγορά μέσω διαδικτύου;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q09A1",
+            "opttxt": "Ναι, αλλά όχι με την ίδια μέθοδο πληρωμής",
+            "nextqID": "Q10"
+          },
+          {
+            "optID": "Q09A2",
+            "opttxt": "Ναι, άλλα όχι απο το ίδιο κατάστημα",
+            "nextqID": "Q10"
+          },
+          {
+            "optID": "Q09Α3",
+            "opttxt": "Όχι στο κοντινό μέλλον",
+            "nextqID": "Q10"
+          }
+        ]
+      },
+      {
+        "qID": "Q10",
+        "qtext": "Θεωρείτε αναγκαία την ύπαρξη διαδικτυακών καταστημάτων ;",
+        "required": true,
+        "type": "question",
+        "options": [
+          {
+            "optID": "Q10A1",
+            "opttxt": "Ναι",
+            "nextqID": "-"
+          },
+          {
+            "optID": "Q10A2",
+            "opttxt": "Όχι",
+            "nextqID": "-"
+          }
+        ]
+      }
+    ]
+  }]

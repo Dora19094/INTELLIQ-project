@@ -14,10 +14,9 @@ export default function AnswerArea({ question, questionNum, session }) {
     };
 
     if (answer) {
-      await fetch(
-        "http://localhost:3001/questionnaires/doanswer/",
-        requestOptions
-      ).then((response) => response.json());
+      await fetch("http://localhost:3001/doanswer", requestOptions).then(
+        (response) => response.json()
+      );
     }
   }
   function fetchNextQuestion(questionID) {
@@ -25,7 +24,12 @@ export default function AnswerArea({ question, questionNum, session }) {
     console.log(question.questionnaireID);
 
     if (question.options[0].nextqID === "-") {
-      navigate("/questionnaires");
+      navigate(
+        `/question/${question.questionnaireID}/submit`,
+        {}
+      );
+      //navigate("/questionnaires");
+      ///question/:questionnaireID/:questionID/submit
     } else {
       navigate(`/question/${question.questionnaireID}/${questionID}`, {
         state: {
@@ -78,7 +82,7 @@ export default function AnswerArea({ question, questionNum, session }) {
           </div>
         )}
         <Button
-          variant="success"
+          variant="secondary"
           disabled={question.required === "TRUE"}
           onClick={() => {
             fireAnswer();
