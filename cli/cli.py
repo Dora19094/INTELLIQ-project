@@ -16,7 +16,7 @@ def health_check():
     print(res)
 
 def questionnaire_upd( file_address):
-    if file_address == '/admin/default':
+    if file_address == 'source':
         print('argument --source was not given')
         return
     print('will upload file in ' + file_address)
@@ -136,45 +136,45 @@ resetall = subparsers.add_parser('resetall', help = 'reset all data')
 resetall.add_argument('--resetall', default = 'reset')
 
 questionnaireupd = subparsers.add_parser('questionnaire_upd', help = 'upload a questionnaire from the file specified by parameter --source')
-questionnaireupd.add_argument('--source', help = 'location of the file')
+questionnaireupd.add_argument('--source', default = 'source',help = 'location of the file')
 
 resetq = subparsers.add_parser('resetq', help = 'reset a questionnaire by providing its id via the parameter --questionnaire_id')
-resetq.add_argument('--questionnaire_id',help = 'id of the questionnaire to be reset')
+resetq.add_argument('--questionnaire_id',default = 'default', help = 'id of the questionnaire to be reset')
 resetq.add_argument('--resetq',default = 'resetq')
 
 questionnaire = subparsers.add_parser('questionnaire', help = 'search for a questionnaire by providing its id via the parameter --questionnaire_id')
-questionnaire.add_argument('--questionnaire_id',help = 'id of the questionnaire to be searched')
+questionnaire.add_argument('--questionnaire_id',default = 'default',help = 'id of the questionnaire to be searched')
 questionnaire.add_argument('--questionnaire', default = 'questionnaire')
 
 question = subparsers.add_parser('question',help = 'search for question with id provided by --question_id from questionnaire with id provided by --questionnaire_id')
 question.add_argument('--question',default = 'question')
-question.add_argument('--questionnaire_id')
-question.add_argument('--question_id')
+question.add_argument('--questionnaire_id',default = 'default')
+question.add_argument('--question_id',default = 'default')
 
 doanswer = subparsers.add_parser('doanswer', help = 'post answer with parameters --questionnaire_id, --question_id, --session_id, --option_id')
 doanswer.add_argument('--doanswer',default = 'doanswer')
-doanswer.add_argument('--questionnaire_id')
-doanswer.add_argument('--question_id')
-doanswer.add_argument('--option_id')
-doanswer.add_argument('--session_id')
+doanswer.add_argument('--questionnaire_id',default = 'default')
+doanswer.add_argument('--question_id',default = 'default')
+doanswer.add_argument('--option_id',default = 'default')
+doanswer.add_argument('--session_id',default = 'default')
 
 getsessionanswers = subparsers.add_parser('getsessionanswers', help = 'return all the answers from the session with id --session_id from questionnaire with id --questionnaire_id')
 getsessionanswers.add_argument('--getsessionanswers',default = 'getsessionanswers')
-getsessionanswers.add_argument('--questionnaire_id')
-getsessionanswers.add_argument('--session_id')
+getsessionanswers.add_argument('--questionnaire_id',default = 'default')
+getsessionanswers.add_argument('--session_id',default = 'default')
 
 getquestionanswers = subparsers.add_parser('getquestionanswers',help = 'return all the answers from the question with id --question_id from questionnaire with id --questionnaire_id')
 getquestionanswers.add_argument('--getquestionanswers',default = 'getquestionanswers')
-getquestionanswers.add_argument('--questionnaire_id')
-getquestionanswers.add_argument('--question_id')
+getquestionanswers.add_argument('--questionnaire_id',default = 'default')
+getquestionanswers.add_argument('--question_id',default = 'default')
 
 args = parser.parse_args()
 args = vars(args)
 if len(args) == 1:
     parser.parse_args(['--help'])
-if args.get('health' , 'default') != 'default':
+if args.get('health' , 'default') == 'health':
     health_check()
-if args.get('resetall','default') != 'default':
+if args.get('resetall','default') == 'reset':
     reset_all()
 if args.get('source','default') != 'default':
     questionnaire_upd(args.get('source','default'))
