@@ -7,14 +7,14 @@ export default function AnswerArea({ question, questionNum, session }) {
   const navigate = useNavigate();
 
   async function fireAnswer() {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(answer),
-    };
-
+    
     if (answer) {
-      await fetch("http://localhost:3001/doanswer", requestOptions).then(
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(answer),
+      };
+      await fetch("http://localhost:3002/answers", requestOptions).then(
         (response) => response.json()
       );
     }
@@ -28,8 +28,6 @@ export default function AnswerArea({ question, questionNum, session }) {
         `/question/${question.questionnaireID}/submit`,
         {}
       );
-      //navigate("/questionnaires");
-      ///question/:questionnaireID/:questionID/submit
     } else {
       navigate(`/question/${question.questionnaireID}/${questionID}`, {
         state: {
@@ -73,6 +71,14 @@ export default function AnswerArea({ question, questionNum, session }) {
                       name="answer-choice"
                       value={option.optID}
                       type="radio"
+                      onChange={(e) =>
+                        setAnswer({
+                          optionID: e.target.value,
+                          session: session,
+                          questionID: question.qID,
+                          questionnaireID: question.questionnaireID,
+                        })
+                      }
                     ></input>
                     <label>{option.opttxt}</label>
                   </div>
