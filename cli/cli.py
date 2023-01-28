@@ -3,61 +3,96 @@ import requests
 
 def error_code_handler(code):
     print(code)
-
+    return
+def result_handler(x,format):
+    if format == 'json':
+        res = x.json()
+    if format == 'csv':
+        res = x.text
+    file = args.get('file','default')
+    if file == 'print':
+        print(res)
 baseurl = 'https://localhost:3000'
 # Admin
 def health_check():
-    print('work in progress healthcheck')
     url = baseurl + '/admin/healthcheck'
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
     x = requests.get(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json()
-    print(res)
+    result_handler(x,format)
 
 def questionnaire_upd( file_address):
     if file_address == 'source':
         print('argument --source was not given')
         return
-    print('will upload file in ' + file_address)
     files = {'file': open(file_address, 'rb')}
     url = baseurl + '/admin/questionnaire_upd'
-    x = requests.post(url,files = files)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.post(url,files = files,verify=False)
     code = x.status_code
     error_code_handler(code)
+    result_handler(x,format)
     
 def reset_all():
-    print('work in progress resetall')
     url = baseurl + '/admin/resetall'
-    x = requests.post(url)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.post(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json()
-    print(res)
+    result_handler(x,format)
 
 def reset_q( id ):
     if id == 'default':
         print('argument --questionnaire_id was not given')
         return
-    print('will reset questionnaire with id ' + id )
     url = baseurl + '/admin/resetq/' + id
-    x = requests.post(url)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.post(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json()
-    print(res)
+    result_handler(x,format)
 # IntelliQ
 def get_questionnaire(id):
     if id == 'default':
         print('argument --questionnaire_id was not given')
         return
-    print('will search for questionnaire with id ' + id)
     url = baseurl + '/questionnaire/' + id
-    x = requests.get(url)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.get(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
-    print(res)
+    result_handler(x,format)
     
 def get_question(qid, id):
     if qid == 'default':
@@ -66,13 +101,18 @@ def get_question(qid, id):
     if id == 'default':
         print('argument --question_id was not given')
         return
-    print('will search for question with id ' + id + ' from questionnaire with id ' + qid)
     url = baseurl + '/questionnaire/' + qid + '/' + id
-    x = requests.get(url)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.get(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
-    print(res)
+    result_handler(x,format)
 
 def do_answer(qid,id,sid,oid):
     if qid == 'default':
@@ -87,13 +127,18 @@ def do_answer(qid,id,sid,oid):
     if oid == 'default':
         print('argument --option_id was not given')
         return
-    print('will post answer with option id ' + oid +' from session with id ' + sid + ' to question with id' + id + ' from questionnaire with id ' + qid)
     url = baseurl + '/doanswer/' + qid + '/' + id + '/' + sid + '/' + oid
-    x = requests.post(url)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.post(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
-    print(res)
+    result_handler(x,format)
 
 def get_session_answers(qid,sid):
     if qid == 'default':
@@ -102,13 +147,18 @@ def get_session_answers(qid,sid):
     if sid == 'default':
         print('argument --session_id was not given')
         return
-    print('will return answers from session with id ' + sid +' from questionnaire with id ' + qid)
     url = baseurl + '/getsessionanswers/' + qid +'/' + sid
-    x = requests.get(url)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.get(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
-    print(res)
+    result_handler(x,format)
 
 def get_question_answers(qid,id):
     if qid == 'default':
@@ -117,16 +167,22 @@ def get_question_answers(qid,id):
     if id == 'default':
         print('argument --question_id was not given')
         return
-    print('will return answers from question with id ' + id +' from questionnaire with id ' + qid)
     url = baseurl + '/getsessionanswers/' + qid +'/' + id
-    x = requests.get(url)
+    if format == 'csv':
+        url += '?format=csv'
+    elif format == 'json':
+        url += '?format=json'
+    else: 
+        print('invalid format')
+        return
+    x = requests.get(url,verify=False)
     code = x.status_code
     error_code_handler(code)
-    res = x.json
-    print(res)
+    result_handler(x,format)
     
 parser = argparse.ArgumentParser(description='command Line Interface')
 parser.add_argument('--format', help = 'choose format, json or csv', default = 'json')
+parser.add_argument('--file', help = 'choose output file, leave blank to print the results', default = 'print')
 subparsers = parser.add_subparsers(help = 'list of commands')
 
 health = subparsers.add_parser('healthcheck' , help = 'check the connection to the server')
@@ -170,6 +226,7 @@ getquestionanswers.add_argument('--question_id',default = 'default')
 
 args = parser.parse_args()
 args = vars(args)
+format = args.get('format','default')
 if len(args) == 1:
     parser.parse_args(['--help'])
 if args.get('health' , 'default') == 'health':
