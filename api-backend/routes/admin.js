@@ -15,7 +15,7 @@ router.get('/healthcheck',(req,res,next)=>{
 });
 
 //2
-router.post('/questionnaire_udp',(req,res,next)=>{
+router.post('/questionnaire_upd',(req,res,next)=>{
     let newBlank = new Blank(req.body);
     newBlank.save()
         .then(savedDoc => res.send({status:"OK"}))
