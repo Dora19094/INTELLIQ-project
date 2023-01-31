@@ -22,7 +22,7 @@ export function QuestionnaireDetailsArea() {
         .then((data) => setQuestionnare(data));
     };
 
-    // console.log(fetchData);
+     // console.log(fetchData);
     fetchData();
     if (questionnaire) {
       console.log(questionnaire);
@@ -64,11 +64,6 @@ export function QuestionnaireDetailsArea() {
             </Card.Header>
             <Card.Img variant="top" />
             <Card.Body style={{ background: "whitesmoke" }}>
-              {/* <Card.Title
-              style={{ color: "darkslateblue", marginBottom: "15px" }}
-            >
-              {questionnaire[0].questionnaireTitle}
-            </Card.Title> */}
               <Card.Text style={{ textAlign: "center", color: "#483d8b" }}>
                 Total Questions:
                 {questionnaire[0].questions &&
@@ -89,9 +84,6 @@ export function QuestionnaireDetailsArea() {
                 <Button
                   variant="primary"
                   style={{
-                    // background: "#d2bed2",
-                    //border: "#d2bed2",
-                    // color: "white",
                     position: "relative",
                   }}
                   // as={Link}

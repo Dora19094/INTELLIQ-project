@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 export default function SumbitArea() {
   const [dataAnswers, setDataAnswers] = useState([]);

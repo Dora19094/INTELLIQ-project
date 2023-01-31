@@ -1,2 +1,6 @@
 .gitignore
 api-backend/node_modules
+data/Q1/node_modules
+
+# dependencies
+/.vscode
