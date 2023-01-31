@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var cors = require('cors');
+
 
 //setup express app
 const app = express();
+app.use(cors({origin:'localhost:3000'}));
 
 //connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1/intelliQ')
@@ -19,6 +22,9 @@ app.listen(3000,()=>{
 
 //middleware for accesing data in json
 app.use(bodyParser.json());
+
+
+
 
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));
