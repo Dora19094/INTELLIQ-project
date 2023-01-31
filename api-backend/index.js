@@ -24,6 +24,13 @@ app.use(bodyParser.json());
 
 app.use(require('cors'));
 
+app.all('*', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    //...
+   });
+
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));
 
