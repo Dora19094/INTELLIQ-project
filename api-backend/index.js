@@ -6,7 +6,9 @@ var cors = require('cors');
 
 //setup express app
 const app = express();
-app.use(cors({origin:'localhost:3000'}));
+app.use(cors({
+    origin: '*'
+}));
 
 //connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1/intelliQ')
