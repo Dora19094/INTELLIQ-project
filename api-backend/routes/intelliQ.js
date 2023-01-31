@@ -105,7 +105,7 @@ router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', fu
     .catch(err=>next(err));
 });
 
-//Endpoint that returns all the questionnaires in the db
+//Endpoint that returns all the blank questionnaires that are in the db
 router.get('/questionnaires', function(req, res, next){ 
     BlankSchema.find()
     .then(function(data){

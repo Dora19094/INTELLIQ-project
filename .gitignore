@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 .gitignore
 api-backend/node_modules
 data/Q1/node_modules
 
 # dependencies
 /.vscode
+=======
+n.gitignore
+api-backend/node_modules
+node_modules
+>>>>>>> c1b03f97e3321f343fc2275cfbaafd2ad3604f8b
