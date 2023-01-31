@@ -18,8 +18,8 @@ mongoose.connect('mongodb://127.0.0.1/intelliQ')
     .catch(err=>console.log(err))
 mongoose.Promise = global.Promise;
 
-app.listen(3000,()=>{
-    console.log('Start listening on port 3000');
+app.listen(3001,()=>{
+    console.log('Start listening on port 3001');
 });
 
 //middleware for accesing data in json
