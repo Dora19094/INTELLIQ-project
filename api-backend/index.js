@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+
+
 //setup express app
 const app = express();
 
@@ -19,6 +21,8 @@ app.listen(3000,()=>{
 
 //middleware for accesing data in json
 app.use(bodyParser.json());
+
+app.use(require('cors'));
 
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));
