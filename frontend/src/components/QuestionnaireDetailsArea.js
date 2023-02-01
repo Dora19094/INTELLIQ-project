@@ -4,7 +4,7 @@ import { Button, Card } from "react-bootstrap";
 
 export function QuestionnaireDetailsArea() {
   const [questionnaire, setQuestionnare] = useState();
-  const { questionnaireID } = useParams();
+  const { _id } = useParams();
   const navigate = useNavigate();
 
   function createRandomString(max) {
@@ -14,7 +14,7 @@ export function QuestionnaireDetailsArea() {
 
   useEffect(() => {
     // const url = `http://localhost:3001/questionnaires/${questionnaireID}`;
-    const url = `http://localhost:3001/questionnaires?questionnaireID=${questionnaireID}`;
+    const url = `http://localhost:3001/questionnaires?questionnaireID=${_id}`;
     // const data = fetch(url).then((response) => response.json());
     const fetchData = async () => {
       await fetch(url)
@@ -26,23 +26,25 @@ export function QuestionnaireDetailsArea() {
     fetchData();
     if (questionnaire) {
       console.log(questionnaire);
-      console.log(questionnaire[0].questionnaireID);
+      console.log(questionnaire[0]._id);
     } // we add [0] because resource is & returns a list
   }, []);
 
   function fetchQuestion(questionnaire) {
-    // const url = `http://localhost:3001/questionnaires/${questionnaire.questionnaireID}/${questionnaire.qID}}`;
-    const paramQuestionnaireID = questionnaire.questionnaireID;
+    // const url = `http://localhost:3001/question/${questionnaire.questionnaireID}/${questionnaire.qID}}`;
+    const paramQuestionnaireID = questionnaire._id;
     const temp = questionnaire.questions[0];
     // there was a space on "qID " on json-server so we added one here too.
-    const paramQuestionID = temp["qID "];
+    const paramQuestionID = temp["qID"];
+    const paramSession = createRandomString(9999);
+    //navigate(url, {
 
     navigate(`/question/${paramQuestionnaireID}/${paramQuestionID}`, {
       state: {
         questionnaireID: paramQuestionnaireID,
         questionID: paramQuestionID,
         questionNum: 1,
-        session: createRandomString(9999),
+        session: paramSession,
       },
     });
   }

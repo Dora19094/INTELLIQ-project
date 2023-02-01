@@ -9,11 +9,13 @@ export default function QuestionArea() {
 
   useEffect(() => {
     // the following url is the right one for the final API Backend
-    // const url = `http://localhost:3001/questions?questionnaireID=${state.questionnaireID}?questionID=${state.questionID}`;
-
+     //const url = `http://localhost:3001/question?questionnaireID=${state.questionnaireID}?questionID=${state.questionID}`;
+     const url = `http://localhost:3001/question/${state.questionnaireID}/${state.questionID}`
     // due to json-server, cannot simulate the right url so i tested the following one
-    const url = `http://localhost:3001/questions?qID=${state.questionID}`;
+    // const url = `http://localhost:3001/questions?qID=${state.questionID}`;
 
+    console.log(state.questionID);
+    console.log(state.questionnaireID);
     const fetchData = async () => {
       await fetch(url)
         .then((response) => response.json())
@@ -21,8 +23,8 @@ export default function QuestionArea() {
     };
 
     fetchData();
-    // console.log(questionData);
-  }, [state.questionID]);
+     console.log(questionData);
+  }, [state.questionID]); //[state.questionID]
   return (
     <>
       {questionData && (
@@ -39,6 +41,7 @@ export default function QuestionArea() {
             question={questionData[0]}
             questionNum={state.questionNum}
             session={state.session}
+           // questionnaireID={state.questionnaireID} //}/getsessionanswers/:questionnaireID/:session
           ></AnswerArea>
         </div>
       )}

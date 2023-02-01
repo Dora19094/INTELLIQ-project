@@ -22,12 +22,12 @@ export function QuestionnaireArea() {
     if (questionnaires) {
       // console.log(questionnaires[0].questionnaireID);
     }
-  }, []);
+  }, []); //[]
 
   return (
     <div className="questionnaires-grid">
       {questionnaires.map((questionnaire) => (
-        <div className="div-card" key={questionnaire.questionnaireID}>
+        <div className="div-card" key={questionnaire._id}>
           <div className="d-flex justify-content-center">
             <img
               src={logo}
@@ -41,7 +41,7 @@ export function QuestionnaireArea() {
           <div className="d-flex justify-content-end">
             <Button
               as={Link}
-              to={`/questionnaires/${questionnaire.questionnaireID}`}
+              to={`/questionnaires/${questionnaire._id}`}
               variant="primary"
             >
               Answer it
