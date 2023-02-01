@@ -116,6 +116,17 @@ router.get('/questionnaires', function(req, res, next){
     .catch(err=>next(err));
 });
 
+//Endpoint that returns all the questions of a specific questionnaire
+router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, next){ 
+    BlankSchema.find({_id :req.params.questionnaireID})
+    .then(function(data){
+        if (data == {}) res.send("No such questionnaire!");
+        else  
+        res.send(data[0].questions);
+    })
+    .catch(err=>next(err));
+});
+
 //fourth required endpoint
 
 
