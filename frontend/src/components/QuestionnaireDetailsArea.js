@@ -15,6 +15,7 @@ export function QuestionnaireDetailsArea() {
   useEffect(() => {
     // const url = `http://localhost:3001/questionnaires/${questionnaireID}`;
     const url = `http://localhost:3001/questionnaires?questionnaireID=${_id}`;
+    //questionnsireID -> _id
     // const data = fetch(url).then((response) => response.json());
     const fetchData = async () => {
       await fetch(url)

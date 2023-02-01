@@ -13,7 +13,7 @@ export default function AnswerArea({ question, questionNum, session }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answer),
-      }; //c. {baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID
+      }; //c. {baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID 
       await fetch("http://localhost:3001/answers", requestOptions).then(
         (response) => response.json()
       );
