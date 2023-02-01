@@ -48,7 +48,7 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
 });
 
 //2. Second required endpoint
-router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next){ 
+router.get('/question/:questionnaireID/:questionID', function(req,res,next){ 
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
         let questions = _.flatMap(data,'questions');
@@ -91,7 +91,7 @@ router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next)
 
 
 //third required endpoint
-router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
+router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
     Answers.Answer.find({questionnaireId : req.params.questionnaireID, session : req.params.session},'answers')
     .then(function(data){
         let new_ans = new Answers.AnswerOne();
