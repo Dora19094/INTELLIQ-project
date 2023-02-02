@@ -7,24 +7,33 @@ export default function QuestionArea() {
   const { state } = useLocation();
   const [questionData, setQuestionData] = useState();
 
+
   useEffect(() => {
     // the following url is the right one for the final API Backend
      //const url = `http://localhost:3001/question?questionnaireID=${state.questionnaireID}?questionID=${state.questionID}`;
     const url = `http://localhost:3001/question/${state.questionnaireID}/${state.questionID}`
+
     // due to json-server, cannot simulate the right url so i tested the following one
     // const url = `http://localhost:3001/questions?qID=${state.questionID}`;
 
-    console.log(state.questionID);
-    console.log(state.questionnaireID);
+    //console.log(state.questionID); // OK
+    //console.log(state.questionnaireID); // OK
     const fetchData = async () => {
       await fetch(url)
         .then((response) => response.json())
-        .then((data) => setQuestionData(data));
+        .then((data) => {console.log(data); const d = [data]; setQuestionData(d)});
+    //   .then(response => {
+    //     //JSON.parse(response._bodyText)
+    //     if(!response)
+    //     console.log("response undefined");
+    // });
     };
-
+   //console.log(fetchData);
     fetchData();
-     console.log(questionData);
-  }, [state.questionID]); //[state.questionID]
+    if(questionData)
+    console.log(questionData);
+
+  }, [state.questionID]); //[[state.questionID]]
   return (
     <>
       {questionData && (

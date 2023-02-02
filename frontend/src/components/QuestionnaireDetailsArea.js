@@ -29,7 +29,7 @@ export function QuestionnaireDetailsArea() {
       console.log(questionnaire);
       console.log(questionnaire[0]._id);
     } // we add [0] because resource is & returns a list
-  }, []);
+  }, [] ); 
 
   function fetchQuestion(questionnaire) {
     // const url = `http://localhost:3001/question/${questionnaire.questionnaireID}/${questionnaire.qID}}`;
@@ -38,7 +38,6 @@ export function QuestionnaireDetailsArea() {
     // there was a space on "qID " on json-server so we added one here too.
     const paramQuestionID = temp["qID"];
     const paramSession = createRandomString(9999);
-    //navigate(url, {
 
     navigate(`/question/${paramQuestionnaireID}/${paramQuestionID}`, {
       state: {

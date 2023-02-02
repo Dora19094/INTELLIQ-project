@@ -22,7 +22,7 @@ export function QuestionnaireArea() {
     if (questionnaires) {
       // console.log(questionnaires[0].questionnaireID);
     }
-  }, []); //[]
+  }, [] ); //[]
 
   return (
     <div className="questionnaires-grid">
