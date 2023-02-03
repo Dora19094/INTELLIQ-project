@@ -22,15 +22,11 @@ export default function QuestionArea() {
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {console.log(data); const d = [data]; setQuestionData(d)});
-    //   .then(response => {
-    //     //JSON.parse(response._bodyText)
-    //     if(!response)
-    //     console.log("response undefined");
-    // });
+
     };
    //console.log(fetchData);
     fetchData();
-    if(questionData)
+   // if(questionData)
     console.log(questionData);
 
   }, [state.questionID]); //[[state.questionID]]
@@ -50,6 +46,7 @@ export default function QuestionArea() {
             question={questionData[0]}
             questionNum={state.questionNum}
             session={state.session}
+            //option = {state.question.option[0].optID}
            // questionnaireID={state.questionnaireID} //}/getsessionanswers/:questionnaireID/:session
           ></AnswerArea>
         </div>

@@ -7,19 +7,21 @@ export default function AnswerArea({ question, questionNum, session }) {
   const navigate = useNavigate();
 
   async function fireAnswer() {
-    
+    //console.log(question);
     if (answer) {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answer),
       }; //c. {baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID 
-      await fetch("http://localhost:3001/answers", requestOptions).then(
+      const url = `http://localhost:3001/doanswer/${question.questionnaireID}/${question.qID}/${session}/${question.options[0].optId}`
+      await fetch(url, requestOptions).then(
         (response) => response.json()
       );
     }
   }
   function fetchNextQuestion(questionID) {
+    console.log(question);
     console.log(questionID);
     console.log(question.questionnaireID);
 
