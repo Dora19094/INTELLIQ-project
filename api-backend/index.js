@@ -1,9 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var cors = require('cors');
+
 
 //setup express app
 const app = express();
+app.use(cors({
+    origin: '*'
+}));
 
 //connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1/intelliQ')
@@ -13,12 +18,15 @@ mongoose.connect('mongodb://127.0.0.1/intelliQ')
     .catch(err=>console.log(err))
 mongoose.Promise = global.Promise;
 
-app.listen(3000,()=>{
-    console.log('Start listening on port 3000');
+app.listen(3001,()=>{
+    console.log('Start listening on port 3001');
 });
 
 //middleware for accesing data in json
 app.use(bodyParser.json());
+
+
+
 
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));

@@ -48,7 +48,7 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
 });
 
 //2. Second required endpoint
-router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next){ 
+router.get('/question/:questionnaireID/:questionID', function(req,res,next){ 
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
         let questions = _.flatMap(data,'questions');
@@ -91,15 +91,28 @@ router.get('/questionnaire/:questionnaireID/:questionID', function(req,res,next)
 
 
 //third required endpoint
-router.post('/questionnaire/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
+router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
     Answers.Answer.find({questionnaireId : req.params.questionnaireID, session : req.params.session},'answers')
     .then(function(data){
         let new_ans = new Answers.AnswerOne();
-        new_ans.qID = req.params.questionID;
-        new_ans.ans = req.params.optionID;
-        data[0].answers.push(new_ans);
-        data[0].save().catch(err=>res.send({status:"failed", reason:err.message}));    //it creates an _id for that object/we ignore for now
-        res.send();
+            new_ans.qID = req.params.questionID;
+            new_ans.ans = req.params.optionID;
+        if (data[0] != undefined)
+        {
+            data[0].answers.push(new_ans);
+            data[0].save().catch(err=>res.send({status:"failed", reason:err.message}));    //it creates an _id for that object/we ignore for now
+            res.send();
+        }
+        else {
+            let newAnswersheet = new Answers.Answer();
+            newAnswersheet.questionnaireID = req.params.questionnaireID;
+            newAnswersheet.session = req.params.session;
+            newAnswersheet.answers.push(new_ans); 
+            console.log(newAnswersheet);
+            newAnswersheet.save().catch(err=>res.send({status:"failed", reason:err.message})); 
+            res.send();
+        }
+        
     })
     //.catch(err=>res.send({status:"failed", reason:err.message}));
     .catch(err=>next(err));
@@ -112,6 +125,17 @@ router.get('/questionnaires', function(req, res, next){
         if (data == {}) res.send("No questionnaires have been saved!");
         else  
         res.send(data);
+    })
+    .catch(err=>next(err));
+});
+
+//Endpoint that returns all the questions of a specific questionnaire
+router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, next){ 
+    BlankSchema.find({_id :req.params.questionnaireID})
+    .then(function(data){
+        if (data == {}) res.send("No such questionnaire!");
+        else  
+        res.send(data[0].questions);
     })
     .catch(err=>next(err));
 });
