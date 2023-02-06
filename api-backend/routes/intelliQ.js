@@ -137,40 +137,119 @@ router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, n
         else  
         res.send(data[0].questions);
     })
-    .catch(err=>next(err));
-});
-
-// Endpoint that returns the required option
-router.get('/givenextqid/:questionnaireID/:questionID/:optionID', function(req,res,next){ 
-    BlankSchema.find({_id : req.params.questionnaireID},'questions')
-    .then(function(data){
-        let error = new Error("The questionnaire is empty or does not exist");
-        error.status = "402";
-        if (data[0] == undefined) throw error;
-        else 
-        {
-            let questions = _.flatMap(data,'questions');
-            let question = _.find(questions,{qID : req.params.questionID});
-            if (question == null) {error.message = "The questionID is wrong or the question does not exist";throw error}
-            let option = _.find(question.options,{optID : req.params.optionID});
-            if (option == null) {error.message = "The optionID is wrong or the option does not exist";throw error}
-
-            res.send(option);
-
-        }
-        
-    })
-    //.catch(err=>res.send({status:"failed", reason:err.message}))
-    .catch(err=>next(err));
+    .catch(err=>next(err)); 
 });
 
 
-//fourth required endpoint
 
+//test endpoint4.1
+router.get('/getsessionanswers/:questionnaireID/:session', (req, res, next) => {
+    const { questionnaireID, session } = req.params;
+    BlankSchema.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
+        .then(data => {
+            let sortedAnswers = _.flatMap(data, 'answers');
+            sortedAnswers.sort((a, b) => a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()));
 
+            let jdata = {
+                questionnaireID: data._id,
+                session: data.session,
+                answers: sortedAnswers.map(answer => answer.ans)
+            };
 
+            if (req.query.format === 'json' || !req.query.format) {
+                res.send(jdata);
+            } else if (req.query.format === 'csv') {
+                const csvData = json2csv.parse(jdata);
+                res.attachment('jdata.csv');
+                res.status(200).send(csvData);
+            } else {
+                throw new Error('Format has to be set to either "json" or "csv"');
+            }
+        })
+        .catch(err => next(err));
+});
+  
+  
+  
+//router.get('/getsessionanswers/:questionnaireID/:session', (req, res, next) => {
+//    BlankSchema.find({_id : req.params.questionnaireID, session : req.params.session},'answers')
+//    .then(function(data){ 
+//        if (!data) {
+//            throw new Error('No data found');
+//        }
+//
+//        let sortedAnswers = _.flatMap(data, 'answers');
+//        sortedAnswers.sort(function(a,b){
+//            return a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()); 
+//        });
+//        sortedAnswers = _.map(sortedAnswers,function(z){
+//            return {
+//                    qID : z.qID,
+//                    ans : z.ans
+//                    };
+//        });
+//        let jdata = {
+//                    questionnaireID : data[0]._id,
+//                    session : data[0].session,
+//                    answers: sortedAnswers
+//                    };
+//
+//        if (req.query.format === 'json' || !req.query.format) {
+//                res.send(jdata);
+//            } else if (req.query.format === 'csv') {
+//                const csvData = json2csv.parse(jdata);
+//                res.attachment('jdata.csv');
+//                res.status(200).send(csvData);
+//            } else {
+//                throw new Error('Format has to be set to either "json" or "csv"');
+//            }
+//        })
+//        .catch(err => next(err));
+//});
 
 //fifth required endpoint 
+
+router.get('/getquestionanswers/:questionnaireID/:questionID', (req, res, next) => {
+    const { questionnaireID, questionID } = req.params;
+    BlankSchema.find({ questionnaireID: questionnaireID })
+    .then(function(data){ 
+        if (!data) {
+            throw new Error('No data found');
+        }
+
+        let answers = _.flatMap(data, 'answers');
+        answers = _.filter(answers, function(ans) {
+            return ans.qID === questionID;
+        });
+        answers.sort(function(a,b){
+            return a.timestamp - b.timestamp; 
+        });
+        answers = _.map(answers,function(z){
+            return {
+                    responseID: z.responseID,
+                    ans : z.ans
+                    };
+        });
+
+        let jdata = {
+            questionnaireID: questionnaireID,
+            questionID: questionID,
+            answers: answers
+        };
+
+        if (req.query.format === 'json' || !req.query.format) {
+            res.send(jdata);
+        } else if (req.query.format === 'csv') {
+            const csvData = json2csv.parse(jdata);
+            res.attachment('jdata.csv');
+            res.status(200).send(csvData);
+        } else {
+            throw new Error('Format has to be set to either "json" or "csv"');
+        }
+    })
+    .catch(err => next(err));
+});
+
 
 
 
