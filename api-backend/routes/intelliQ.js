@@ -215,32 +215,33 @@ router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, ne
 
 //fifth required endpoint 
 
-router.get('/getquestionanswers/:questionnaireID/:questionID', (req, res, next) => {
+router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res, next){
     const { questionnaireID, questionID } = req.params;
-    BlankSchema.find({ questionnaireID: questionnaireID })
+    Answers.Answer.find({ questionnaireID: questionnaireID, qID: questionID})
     .then(function(data){ 
         if (!data) {
             throw new Error('No data found');
         }
-
-        let answers = _.flatMap(data, 'answers');
-        answers = _.filter(answers, function(ans) {
-            return ans.qID === questionID;
+        //console.log(data);
+        let result = _.flatMap(data, function(obj){
+            return {answer : _.find(obj.answers, {qID : questionID}), session:obj.session }
         });
-        answers.sort(function(a,b){
+
+        result.sort(function(a,b){
             return a.timestamp - b.timestamp; 
         });
-        answers = _.map(answers,function(z){
+        
+        result = _.map(result,function(z){
             return {
-                    responseID: z.responseID,
-                    ans : z.ans
+                    session: z.session,
+                    ans : z.answer.ans
                     };
         });
 
         let jdata = {
             questionnaireID: questionnaireID,
             questionID: questionID,
-            answers: answers
+            answers: result
         };
 
         if (req.query.format === 'json' || !req.query.format) {
@@ -255,7 +256,6 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', (req, res, next) 
     })
     .catch(err => next(err));
 });
-
 
 
 
