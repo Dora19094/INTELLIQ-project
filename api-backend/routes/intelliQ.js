@@ -143,19 +143,25 @@ router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, n
 
 
 //test endpoint4.1
-router.get('/getsessionanswers/:questionnaireID/:session', (req, res, next) => {
+router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, next) {
     const { questionnaireID, session } = req.params;
-    BlankSchema.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
+    Answers.Answer.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
         .then(data => {
+            console.log("Data[0]\n", data[0]);
             let sortedAnswers = _.flatMap(data, 'answers');
+            console.log(sortedAnswers);
             sortedAnswers.sort((a, b) => a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()));
-
+            console.log(sortedAnswers);
             let jdata = {
-                questionnaireID: data._id,
-                session: data.session,
-                answers: sortedAnswers.map(answer => answer.ans)
-            };
-
+                questionnaireID: data[0]._id,
+                session: data[0].session,
+                answers: _.map(sortedAnswers,function(o){
+                    return {
+                        qID : o.qID,
+                        ans : o.ans
+                    }
+                })
+            }
             if (req.query.format === 'json' || !req.query.format) {
                 res.send(jdata);
             } else if (req.query.format === 'csv') {
