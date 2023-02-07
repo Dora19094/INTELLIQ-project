@@ -9,7 +9,7 @@ const Answers = require('../models/answer.js');
 const json2csv = require('json2csv');
 
 
-// 1. first required endpoint
+//a
 router.get('/questionnaire/:questionnaireID', function(req, res, next){ 
     BlankSchema.find({_id :req.params.questionnaireID})
     .then(function(data){ 
@@ -47,7 +47,7 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
     .catch(err=>next(err));
 });
 
-//2. Second required endpoint
+//b
 router.get('/question/:questionnaireID/:questionID', function(req,res,next){ 
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
@@ -89,8 +89,7 @@ router.get('/question/:questionnaireID/:questionID', function(req,res,next){
     .catch(err=>next(err));
 });
 
-
-//third required endpoint
+//c
 router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
     Answers.Answer.find({questionnaireId : req.params.questionnaireID, session : req.params.session},'answers')
     .then(function(data){
@@ -118,31 +117,7 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
     .catch(err=>next(err));
 });
 
-//Endpoint that returns all the blank questionnaires that are in the db
-router.get('/questionnaires', function(req, res, next){ 
-    BlankSchema.find()
-    .then(function(data){
-        if (data == {}) res.send("No questionnaires have been saved!");
-        else  
-        res.send(data);
-    })
-    .catch(err=>next(err));
-});
-
-//Endpoint that returns all the questions of a specific questionnaire
-router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, next){ 
-    BlankSchema.find({_id :req.params.questionnaireID})
-    .then(function(data){
-        if (data == {}) res.send("No such questionnaire!");
-        else  
-        res.send(data[0].questions);
-    })
-    .catch(err=>next(err)); 
-});
-
-
-
-//test endpoint4.1
+//d
 router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, next) {
     const { questionnaireID, session } = req.params;
     Answers.Answer.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
@@ -175,46 +150,7 @@ router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, ne
         .catch(err => next(err));
 });
   
-  
-  
-//router.get('/getsessionanswers/:questionnaireID/:session', (req, res, next) => {
-//    BlankSchema.find({_id : req.params.questionnaireID, session : req.params.session},'answers')
-//    .then(function(data){ 
-//        if (!data) {
-//            throw new Error('No data found');
-//        }
-//
-//        let sortedAnswers = _.flatMap(data, 'answers');
-//        sortedAnswers.sort(function(a,b){
-//            return a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()); 
-//        });
-//        sortedAnswers = _.map(sortedAnswers,function(z){
-//            return {
-//                    qID : z.qID,
-//                    ans : z.ans
-//                    };
-//        });
-//        let jdata = {
-//                    questionnaireID : data[0]._id,
-//                    session : data[0].session,
-//                    answers: sortedAnswers
-//                    };
-//
-//        if (req.query.format === 'json' || !req.query.format) {
-//                res.send(jdata);
-//            } else if (req.query.format === 'csv') {
-//                const csvData = json2csv.parse(jdata);
-//                res.attachment('jdata.csv');
-//                res.status(200).send(csvData);
-//            } else {
-//                throw new Error('Format has to be set to either "json" or "csv"');
-//            }
-//        })
-//        .catch(err => next(err));
-//});
-
-//fifth required endpoint 
-
+//e 
 router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res, next){
     const { questionnaireID, questionID } = req.params;
     Answers.Answer.find({ questionnaireID: questionnaireID, qID: questionID})
@@ -257,6 +193,27 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res
     .catch(err => next(err));
 });
 
+//Extra endpoint that returns all the blank questionnaires that are in the db
+router.get('/questionnaires', function(req, res, next){ 
+    BlankSchema.find()
+    .then(function(data){
+        if (data == {}) res.send("No questionnaires have been saved!");
+        else  
+        res.send(data);
+    })
+    .catch(err=>next(err));
+});
+
+//Extra endpoint that returns all the questions of a specific questionnaire
+router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, next){ 
+    BlankSchema.find({_id :req.params.questionnaireID})
+    .then(function(data){
+        if (data == {}) res.send("No such questionnaire!");
+        else  
+        res.send(data[0].questions);
+    })
+    .catch(err=>next(err)); 
+});
 
 
 module.exports = router;
