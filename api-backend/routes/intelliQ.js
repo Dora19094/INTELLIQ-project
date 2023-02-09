@@ -117,24 +117,27 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
     .catch(err=>next(err));
 });
 
-//d
-
-
+//d (changed)
 router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, next) {
     const { questionnaireID, session } = req.params;
     BlankSchema.find({_id : req.params.questionnaireID}).then(blank => 
         Answers.Answer.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
         .then(data => {
+            let error = new Error("The questionnaire is empty or does not exist");
+            error.status = "402";
             console.log("Data[0]\n", data[0]);
             let sortedAnswers = data[0].answers;
             sortedAnswers.sort((a, b) => { if (a.qID != undefined && b.qID != undefined) a.qID.toLowerCase().localeCompare(b.qID.toLowerCase())});
             var q,a,qinfo = blank[0].questions;
+            if (qinfo == undefined) throw error;
             let jdata = {
                 questionnaireID: data[0]._id,
                 session: data[0].session,
                 answers: _.map(sortedAnswers,function(o){
                     q = _.find(qinfo, {qID : o.qID});
+                    if (q == undefined) {error.message = "Wrong Qid matching";throw error};
                     a = _.find(q.options,{optID : o.ans});
+                    if (a == undefined) {error.message = "Wrong Optid matching";throw error};
                     return {
                         qID : o.qID,
                         qtext : q.qtext,
