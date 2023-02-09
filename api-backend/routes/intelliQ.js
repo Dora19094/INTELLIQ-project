@@ -48,7 +48,6 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
         }
         
     })
-    //.catch(err=>res.send({status:"failed", reason:err.message}))
     .catch(err=>next(err));
 });
 
@@ -95,7 +94,6 @@ router.get('/question/:questionnaireID/:questionID', function(req,res,next){
         }
         
     })
-    //.catch(err=>res.send({status:"failed", reason:err.message}))
     .catch(err=>next(err));
 });
 
@@ -123,11 +121,10 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
         }
         
     })
-    //.catch(err=>res.send({status:"failed", reason:err.message}));
     .catch(err=>next(err));
 });
 
-//d (changed)
+//d 
 router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, next) {
     const { questionnaireID, session } = req.params;
     BlankSchema.find({_id : req.params.questionnaireID}).then(blank => 
@@ -183,28 +180,23 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res
         if (data[0] == undefined) {
             throw error;
         }
-        //console.log(data);
         let result = _.flatMap(data, function(obj){
             return {answer : _.find(obj.answers, {qID : questionID}), session:obj.session }
         });
-
         result.sort(function(a,b){
             return a.timestamp - b.timestamp; 
         });
-        
         result = _.map(result,function(z){
             return {
                     session: z.session,
                     ans : z.answer.ans
                     };
         });
-
         let jdata = {
             questionnaireID: questionnaireID,
             questionID: questionID,
             answers: result
         };
-
         if (req.query.format === 'json' || !req.query.format) {
             res.send(jdata);
         } else if (req.query.format === 'csv') {
@@ -247,13 +239,9 @@ router.get('/givenextqid/:questionnaireID/:questionID/:optionID', function(req,r
             if (question == null) {error.message = "The questionID is wrong or the question does not exist";throw error}
             let option = _.find(question.options,{optID : req.params.optionID});
             if (option == null) {error.message = "The optionID is wrong or the option does not exist";throw error}
-
             res.send(option);
-
         }
-        
     })
-    //.catch(err=>res.send({status:"failed", reason:err.message}))
     .catch(err=>next(err));
 });
 

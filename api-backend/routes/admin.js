@@ -6,11 +6,12 @@ const Answers = require('../models/answer');
 const mongoose = require('mongoose');
 
 //1
+//To stop mongoDB windows_key + R => services.msc
 router.get('/healthcheck',(req,res,next)=>{
     if(mongoose.connection.readyState===1){
         res.send({status: "OK", dbconnection:'mongodb://127.0.0.1/intelliQ'})
     } else{
-        res.status(500).send({status: "failed", dbconnection:'mongodb://127.0.0.1/intelliQ'})
+        res.status(500).send({status: "failed", dbconnection:'mongodb://127.0.0.1/intelliQ'});
     }
 });
 
@@ -24,21 +25,62 @@ router.post('/questionnaire_upd',(req,res,next)=>{
 
 //3
 router.post('/resetall',(req,res,next)=>{
-    Answers.Answer.deleteMany({})
-        .then(Blank.deleteMany({}).then(res.send({status:"OK"})))
-        .catch(err=>next(err));
+    Answers.Answer.find({},(err_answers,data_answers)=>{
+        if(err_answers){
+            next(err_answers)
+        } else {
+            Blank.find({},(err_blank,data_blank)=>{
+                if(err_blank){
+                    next(err_blank);
+                } else {
+                    try{
+                        if(!data_answers.length && !data_blank.length){
+                            const error = new Error("No more data to be deleted");
+                            error.status = "402";
+                            throw error;
+                        } else if(data_answers.length && data_blank.length){
+                            Answers.Answer.deleteMany({})
+                                .then(Blank.deleteMany({}))
+                                .then(res.send({status:"OK"}))
+                                .catch(err=>next(err))
+                        } else if(data_answers.length){
+                            Answers.Answer.deleteMany({})
+                                .then(res.send({status:"OK"}))
+                                .catch(err=>next(err))
+                        }
+                        else if(data_blank.length){
+                            Blank.deleteMany({})
+                                .then(res.send({status:"OK"}))
+                                .catch(err=>next(err))
+                        }
+                    } catch(err){
+                        next(err);
+                    }
+                }
+            })
+        }
+    })
 });
 
 //4
-router.post('/resetq/:questionnaireID',(req,res,next)=>{
-    Answers.Answer.find({'questionnaireID':req.params.questionnaireID}).deleteMany()
-        .then((returned)=>{
-            if(returned.deletedCount>0) res.send({status:"OK"})
-            else {throw new Error('No more answers to be deleted with this questionnaireID')}
-        })
-        .catch(err=>next(err));
+router.post('/resetq/:questionnaireID', (req,res,next)=>{
+    Answers.Answer.find({'questionnaireID':req.params.questionnaireID}, (err,data)=>{
+        if(err){
+            next(err);
+        } else {
+            try{
+                if(data.length>0){
+                    Answers.Answer.find({'questionnaireID':req.params.questionnaireID}).deleteMany()
+                        .then((returned)=>{res.send({status:"OK"})})
+                        .catch(err=>next(err));
+                } else { 
+                    const error = new Error("Questionnaire does not exist")
+                    error.status = "402";
+                    throw error;
+                }
+            } catch(err) {next(err)}
+        }
+    })
 });
 
 module.exports = router;
-
-//main branch
