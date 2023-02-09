@@ -3,33 +3,61 @@ import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function AnswerArea({ question, questionNum, session }) {
+
+
+
+
+
+
   const [answer, setAnswer] = useState();
   const navigate = useNavigate();
-
+  //const nextqid = answer.optionID;
   async function fireAnswer() {
-    
+    //console.log(question);
     if (answer) {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answer),
       }; //c. {baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID 
-      await fetch("http://localhost:3001/answers", requestOptions).then(
-        (response) => response.json()
+      const url = `http://localhost:3001/doanswer/${question.questionnaireID}/${question.qID}/${session}/${answer.optionID}`
+      await fetch(url, requestOptions).then(
+       // (response) => response.json() // provokes error, ok when commenting it out
       );
+      console.log(answer);
     }
-  }
+  } 
+
+  
+  // const [nextqdata, setNextqData] = useState();
+  // useEffect(() => {
+    
+  //   const url = `http://localhost:3001/givenextqid/${question.questionnaireID}/${question.qID}/${answer.optionID}`
+  
+  //   const fetchData = 
+  //      fetch(url)
+  //       .then((response) => response.json())
+  //       .then((data) => {console.log(data); const d = [data]; setNextqData(d)});
+  
+    
+  //   fetchData();
+  //   console.log(nextqdata);
+  // }, []);
+
+
   function fetchNextQuestion(questionID) {
+    console.log("hello");
+    console.log(answer.nextqID);
+    console.log(question);
     console.log(questionID);
     console.log(question.questionnaireID);
 
-    if (question.options[0].nextqID === "-") {
+    if (answer.nextqID === "-") { //question.options[0].nextqID
       navigate(
-        `/question/${question.questionnaireID}/submit`,
-        {}
-      );
+        `/question/${question.questionnaireID}/${session}/submit`,
+        {});
     } else {
-      navigate(`/question/${question.questionnaireID}/${questionID}`, {
+      navigate(`/question/${question.questionnaireID}/${questionID}`, { //questionID
         state: {
           questionnaireID: question.questionnaireID,
           questionID: questionID,
@@ -51,10 +79,12 @@ export default function AnswerArea({ question, questionNum, session }) {
                 placeholder={question.options[0].opttxt}
                 onChange={(e) =>
                   setAnswer({
-                    optionID: e.target.value,
+                    optionID: e.target.value, //""  answer.optionID
                     session: session,
                     questionID: question.qID,
                     questionnaireID: question.questionnaireID,
+                    //nextqID: question.options[0].nextqID
+                    nextqID: question.options[0].nextqID
                   })
                 }
               ></input>
@@ -66,17 +96,19 @@ export default function AnswerArea({ question, questionNum, session }) {
               <Card.Body>
                 <Card.Title style={{ marginBottom: "15px" }}>Answer</Card.Title>
                 {question.options.map((option) => (
-                  <div key={option.optID}>
+                  <div key={option.optId}>
                     <input
                       name="answer-choice"
-                      value={option.optID}
+                      value={option.optId}
                       type="radio"
                       onChange={(e) =>
                         setAnswer({
+                          //e.target.checked   e.target.value
                           optionID: e.target.value,
                           session: session,
                           questionID: question.qID,
                           questionnaireID: question.questionnaireID,
+                          nextqID: option.nextqID
                         })
                       }
                     ></input>
@@ -85,14 +117,14 @@ export default function AnswerArea({ question, questionNum, session }) {
                 ))}
               </Card.Body>
             </Card>
-          </div>
+          </div> 
         )}
         <Button
           variant="secondary"
           disabled={question.required === "TRUE"}
           onClick={() => {
             fireAnswer();
-            fetchNextQuestion(question.options[0].nextqID);
+            fetchNextQuestion(answer.nextqID); //question.options[0].nextqID
           }}
         >
           Skip
@@ -101,7 +133,7 @@ export default function AnswerArea({ question, questionNum, session }) {
           variant="primary"
           onClick={() => {
             fireAnswer();
-            fetchNextQuestion(question.options[0].nextqID);
+            fetchNextQuestion(answer.nextqID); //question.options[0].nextqID
           }}
         >
           Next

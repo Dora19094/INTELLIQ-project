@@ -4,7 +4,7 @@ import { Button, Card } from "react-bootstrap";
 
 export function QuestionnaireDetailsArea() {
   const [questionnaire, setQuestionnare] = useState();
-  const { _id } = useParams();
+  const { questionnaireID } = useParams();
   const navigate = useNavigate();
 
   function createRandomString(max) {
@@ -14,31 +14,32 @@ export function QuestionnaireDetailsArea() {
 
   useEffect(() => {
     // const url = `http://localhost:3001/questionnaires/${questionnaireID}`;
-    const url = `http://localhost:3001/questionnaires?questionnaireID=${_id}`;
+    const url = `http://localhost:3001/questionnaire/${questionnaireID}`;
+    //const url = `http://localhost:3001/questionnaires/${_id}`;
     //questionnsireID -> _id
     // const data = fetch(url).then((response) => response.json());
+    //console.log(questionnaireID);
+
     const fetchData = async () => {
       await fetch(url)
         .then((response) => response.json())
-        .then((data) => setQuestionnare(data));
+        .then((data) => {console.log(data); const d = [data]; setQuestionnare(d)});
     };
 
-     // console.log(fetchData);
     fetchData();
     if (questionnaire) {
       console.log(questionnaire);
-      console.log(questionnaire[0]._id);
+     // console.log(questionnaire[0]._id);
     } // we add [0] because resource is & returns a list
-  }, []);
+  }, [] ); 
 
   function fetchQuestion(questionnaire) {
     // const url = `http://localhost:3001/question/${questionnaire.questionnaireID}/${questionnaire.qID}}`;
-    const paramQuestionnaireID = questionnaire._id;
+    const paramQuestionnaireID = questionnaire.questionnaireID; //_id
     const temp = questionnaire.questions[0];
     // there was a space on "qID " on json-server so we added one here too.
     const paramQuestionID = temp["qID"];
     const paramSession = createRandomString(9999);
-    //navigate(url, {
 
     navigate(`/question/${paramQuestionnaireID}/${paramQuestionID}`, {
       state: {
@@ -63,21 +64,23 @@ export function QuestionnaireDetailsArea() {
                 background: "#d2bfd3",
               }}
             >
-              {questionnaire[0].questionnaireTitle}
+              {questionnaire[0].questionnaireTitle //here
+              }
             </Card.Header>
             <Card.Img variant="top" />
             <Card.Body style={{ background: "whitesmoke" }}>
               <Card.Text style={{ textAlign: "center", color: "#483d8b" }}>
                 Total Questions:
                 {questionnaire[0].questions &&
-                  questionnaire[0].questions.length}
+                  questionnaire[0].questions.length //here too
+                  }
               </Card.Text>
               <Card.Text style={{ textAlign: "center", color: "#483d8b" }}>
                 Questions with profile type:
                 {
                   questionnaire[0].questions.filter(
                     (question) => question.type === "profile"
-                  ).length
+                  ).length //here too
                 }
               </Card.Text>
               <div
@@ -91,8 +94,8 @@ export function QuestionnaireDetailsArea() {
                   }}
                   // as={Link}
                   // to={`/question/${questionnaire[0].questionnaireID}/${questionnaire[0].questions[0].qID}`}
-                  onClick={() => fetchQuestion(questionnaire[0])}
-                >
+                  onClick={() => fetchQuestion(questionnaire[0])} // questionnaire[0] need to fix error here - only fetches the 1st questionnaire
+                > 
                   Start
                 </Button>
               </div>

@@ -9,6 +9,7 @@ import { QuestionnaireDetailsArea } from "./components/QuestionnaireDetailsArea"
 import "./App.css";
 import QuestionArea from "./components/QuestionArea";
 import SubmitArea from "./components/SumbitArea";
+import SessionAnswersArea from "./components/SessionAnswersArea";
 
 function App() {
   return (
@@ -28,8 +29,12 @@ function App() {
             element={<QuestionArea />}
           />
           <Route
-            path="/question/:questionnaireID/submit"
+            path="/question/:questionnaireID/:session/submit"
             element={<SubmitArea />}
+          />
+           <Route
+            path="/getsessionanswers/:questionnaireID/:session"
+            element={<SessionAnswersArea />}
           />
         </Routes>
       </BrowserRouter>

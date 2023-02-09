@@ -9,7 +9,7 @@ const Answers = require('../models/answer.js');
 const json2csv = require('json2csv');
 
 
-// 1. first required endpoint
+//a
 router.get('/questionnaire/:questionnaireID', function(req, res, next){ 
     BlankSchema.find({_id :req.params.questionnaireID})
     .then(function(data){ 
@@ -47,7 +47,7 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
     .catch(err=>next(err));
 });
 
-//2. Second required endpoint
+//b
 router.get('/question/:questionnaireID/:questionID', function(req,res,next){ 
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
@@ -89,8 +89,7 @@ router.get('/question/:questionnaireID/:questionID', function(req,res,next){
     .catch(err=>next(err));
 });
 
-
-//third required endpoint
+//c
 router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
     Answers.Answer.find({questionnaireId : req.params.questionnaireID, session : req.params.session},'answers')
     .then(function(data){
@@ -118,7 +117,83 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
     .catch(err=>next(err));
 });
 
-//Endpoint that returns all the blank questionnaires that are in the db
+//d
+router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, next) {
+    const { questionnaireID, session } = req.params;
+    Answers.Answer.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
+        .then(data => {
+            console.log("Data[0]\n", data[0]);
+            let sortedAnswers = _.flatMap(data, 'answers');
+            console.log(sortedAnswers);
+            sortedAnswers.sort((a, b) => a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()));
+            console.log(sortedAnswers);
+            let jdata = {
+                questionnaireID: data[0]._id,
+                session: data[0].session,
+                answers: _.map(sortedAnswers,function(o){
+                    return {
+                        qID : o.qID,
+                        ans : o.ans
+                    }
+                })
+            }
+            if (req.query.format === 'json' || !req.query.format) {
+                res.send(jdata);
+            } else if (req.query.format === 'csv') {
+                const csvData = json2csv.parse(jdata);
+                res.attachment('jdata.csv');
+                res.status(200).send(csvData);
+            } else {
+                throw new Error('Format has to be set to either "json" or "csv"');
+            }
+        })
+        .catch(err => next(err));
+});
+  
+//e 
+router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res, next){
+    const { questionnaireID, questionID } = req.params;
+    Answers.Answer.find({ questionnaireID: questionnaireID, qID: questionID})
+    .then(function(data){ 
+        if (!data) {
+            throw new Error('No data found');
+        }
+        //console.log(data);
+        let result = _.flatMap(data, function(obj){
+            return {answer : _.find(obj.answers, {qID : questionID}), session:obj.session }
+        });
+
+        result.sort(function(a,b){
+            return a.timestamp - b.timestamp; 
+        });
+        
+        result = _.map(result,function(z){
+            return {
+                    session: z.session,
+                    ans : z.answer.ans
+                    };
+        });
+
+        let jdata = {
+            questionnaireID: questionnaireID,
+            questionID: questionID,
+            answers: result
+        };
+
+        if (req.query.format === 'json' || !req.query.format) {
+            res.send(jdata);
+        } else if (req.query.format === 'csv') {
+            const csvData = json2csv.parse(jdata);
+            res.attachment('jdata.csv');
+            res.status(200).send(csvData);
+        } else {
+            throw new Error('Format has to be set to either "json" or "csv"');
+        }
+    })
+    .catch(err => next(err));
+});
+
+//Extra endpoint that returns all the blank questionnaires that are in the db
 router.get('/questionnaires', function(req, res, next){ 
     BlankSchema.find()
     .then(function(data){
@@ -129,7 +204,7 @@ router.get('/questionnaires', function(req, res, next){
     .catch(err=>next(err));
 });
 
-//Endpoint that returns all the questions of a specific questionnaire
+//Extra endpoint that returns all the questions of a specific questionnaire
 router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, next){ 
     BlankSchema.find({_id :req.params.questionnaireID})
     .then(function(data){
@@ -137,16 +212,8 @@ router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, n
         else  
         res.send(data[0].questions);
     })
-    .catch(err=>next(err));
+    .catch(err=>next(err)); 
 });
-
-//fourth required endpoint
-
-
-
-
-//fifth required endpoint 
-
 
 
 module.exports = router;
