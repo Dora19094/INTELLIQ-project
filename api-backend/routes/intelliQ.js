@@ -7,12 +7,16 @@ const _ = require('lodash');
 const { findById } = require('../models/blank.js');
 const Answers = require('../models/answer.js');
 const json2csv = require('json2csv');
+const { errorMonitor } = require('events');
 
 
 //a
 router.get('/questionnaire/:questionnaireID', function(req, res, next){ 
     BlankSchema.find({_id :req.params.questionnaireID})
     .then(function(data){ 
+        let error = new Error("The questionnaire is empty or does not exist");
+        error.status = "402";
+        if (data[0] == {}) throw error;
         let sorted_questions = _.flatMap(data,'questions');
         sorted_questions.sort(function(a,b){
             return a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()); 
@@ -39,7 +43,9 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
         }
         else 
         {
-            throw new Error('Format has to be set to either json or csv!');
+            let error = new Error('Format has to be set to either json or csv!');
+            error.status = "400";
+            throw error;
         }
         
     })
@@ -51,6 +57,9 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
 router.get('/question/:questionnaireID/:questionID', function(req,res,next){ 
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
+        let error = new Error("The questionnaire is empty or does not exist");
+        error.status = "402";
+        if (data[0] == {}) throw error; 
         let questions = _.flatMap(data,'questions');
         let question = _.filter(questions,{qID : req.params.questionID});
         let options = _.flatMap(question,'options').sort(function(a,b){
@@ -81,7 +90,9 @@ router.get('/question/:questionnaireID/:questionID', function(req,res,next){
         }
         else 
         {
-            throw new Error('Format has to be set to either json or csv!');
+            let error = new Error('Format has to be set to either json or csv!');
+            error.status = "400";
+            throw error;
         }
         
     })
@@ -153,7 +164,9 @@ router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, ne
                 res.attachment('jdata.csv');
                 res.status(200).send(csvData);
             } else {
-                throw new Error('Format has to be set to either "json" or "csv"');
+                let error = new Error('Format has to be set to either "json" or "csv"');
+                error.status = "400";
+                throw error;
             }
         })
         .catch(err => next(err)))
@@ -166,8 +179,10 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res
     const { questionnaireID, questionID } = req.params;
     Answers.Answer.find({ questionnaireID: questionnaireID, qID: questionID})
     .then(function(data){ 
-        if (!data) {
-            throw new Error('No data found');
+        let error = new Error("The question or the questionnaire does not exist");
+        error.status = "402";
+        if (data[0] == undefined) {
+            throw error;
         }
         //console.log(data);
         let result = _.flatMap(data, function(obj){
@@ -198,7 +213,9 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res
             res.attachment('jdata.csv');
             res.status(200).send(csvData);
         } else {
-            throw new Error('Format has to be set to either "json" or "csv"');
+            let error = new Error('Format has to be set to either json or csv!');
+            error.status = "400";
+            throw error;
         }
     })
     .catch(err => next(err));
@@ -208,7 +225,9 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res
 router.get('/questionnaires', function(req, res, next){ 
     BlankSchema.find()
     .then(function(data){
-        if (data == {}) res.send("No questionnaires have been saved!");
+        let error = new Error("No questionnaires have been saved!");
+        error.status = "402";
+        if (data == {}) throw error;
         else  
         res.send(data);
     })
