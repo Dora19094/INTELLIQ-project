@@ -25,9 +25,6 @@ app.listen(3001,()=>{
 //middleware for accesing data in json
 app.use(bodyParser.json());
 
-
-
-
 //admin endpoints
 app.use('/admin',require('./routes/admin.js'));
 
@@ -48,4 +45,3 @@ app.use((err,req,res,next)=>{
     res.status(status).send({status:"Failed",error:err.message})
 });
 
-//http branch
