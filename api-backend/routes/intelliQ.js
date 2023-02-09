@@ -118,22 +118,28 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
 });
 
 //d
+
+
 router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, next) {
     const { questionnaireID, session } = req.params;
-    Answers.Answer.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
+    BlankSchema.find({_id : req.params.questionnaireID}).then(blank => 
+        Answers.Answer.find({ questionnaireID: req.params.questionnaireID, session: req.params.session })
         .then(data => {
             console.log("Data[0]\n", data[0]);
-            let sortedAnswers = _.flatMap(data, 'answers');
-            console.log(sortedAnswers);
-            sortedAnswers.sort((a, b) => a.qID.toLowerCase().localeCompare(b.qID.toLowerCase()));
-            console.log(sortedAnswers);
+            let sortedAnswers = data[0].answers;
+            sortedAnswers.sort((a, b) => { if (a.qID != undefined && b.qID != undefined) a.qID.toLowerCase().localeCompare(b.qID.toLowerCase())});
+            var q,a,qinfo = blank[0].questions;
             let jdata = {
                 questionnaireID: data[0]._id,
                 session: data[0].session,
                 answers: _.map(sortedAnswers,function(o){
+                    q = _.find(qinfo, {qID : o.qID});
+                    a = _.find(q.options,{optID : o.ans});
                     return {
                         qID : o.qID,
-                        ans : o.ans
+                        qtext : q.qtext,
+                        ans : o.ans,
+                        anstxt : a.opttxt
                     }
                 })
             }
@@ -147,8 +153,10 @@ router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, ne
                 throw new Error('Format has to be set to either "json" or "csv"');
             }
         })
-        .catch(err => next(err));
+        .catch(err => next(err)))
+    
 });
+
   
 //e 
 router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res, next){
