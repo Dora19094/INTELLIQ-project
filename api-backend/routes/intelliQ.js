@@ -212,15 +212,28 @@ router.get('/questionnaires', function(req, res, next){
     .catch(err=>next(err));
 });
 
-//Extra endpoint that returns all the questions of a specific questionnaire
-router.get('/questionnaires/:questionnaireID/allQuestions', function(req, res, next){ 
-    BlankSchema.find({_id :req.params.questionnaireID})
+// Endpoint that returns the required option
+router.get('/givenextqid/:questionnaireID/:questionID/:optionID', function(req,res,next){ 
+    BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
-        if (data == {}) res.send("No such questionnaire!");
-        else  
-        res.send(data[0].questions);
+        let error = new Error("The questionnaire is empty or does not exist");
+        error.status = "402";
+        if (data[0] == undefined) throw error;
+        else 
+        {
+            let questions = _.flatMap(data,'questions');
+            let question = _.find(questions,{qID : req.params.questionID});
+            if (question == null) {error.message = "The questionID is wrong or the question does not exist";throw error}
+            let option = _.find(question.options,{optID : req.params.optionID});
+            if (option == null) {error.message = "The optionID is wrong or the option does not exist";throw error}
+
+            res.send(option);
+
+        }
+        
     })
-    .catch(err=>next(err)); 
+    //.catch(err=>res.send({status:"failed", reason:err.message}))
+    .catch(err=>next(err));
 });
 
 
