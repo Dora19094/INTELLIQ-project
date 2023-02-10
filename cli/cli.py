@@ -11,7 +11,16 @@ def result_handler(x,format):
         print(res)
 
 def error_code_handler(code):
-    print(code)
+    if (code == 200):
+        print('The request was successful')
+    if (code == 400):
+        print('Bad request')
+    if (code == 401):
+        print('Authorization is necessary for this request')
+    if (code == 402):
+        print('No data were found')
+    if (code == 500):
+        print('Internal server error') 
     return
 
 parser = argparse.ArgumentParser(description='command Line Interface')
@@ -36,7 +45,7 @@ question_id = args.get('question_id','default')
 session_id = args.get('session_id','default')
 option_id = args.get('option_id','default')
 
-url = 'http://localhost:3000'
+url = 'https://localhost:3000'
 
 post = ['resetall','resetq','doanswer']
 
@@ -79,7 +88,7 @@ if (scope in post):
 elif(scope == 'questionnaire_upd'):
     x = requests.post(url,files = files)
 else:
-    x = requests.get(url)
+    x = requests.get(url,verify = False)
 code = x.status_code
 result_handler(x,format)
 error_code_handler(code)
