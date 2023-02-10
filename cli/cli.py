@@ -6,10 +6,12 @@ def result_handler(x,format):
         res = x.json()
     if format == 'csv':
         res = x.text
-    file = args.get('file','default')
     if file == 'print':
         print(res)
-
+    else:
+        f = open(file,'w')
+        f.write(res)
+        f.close()
 def error_code_handler(code):
     if (code == 200):
         print('The request was successful')
@@ -27,11 +29,11 @@ parser = argparse.ArgumentParser(description='command Line Interface')
 parser.add_argument('scope', nargs = '?', default = 'help')
 parser.add_argument('--format', help = 'choose format, json or csv', default = 'json')
 parser.add_argument('--file', help = 'choose output file, leave blank to print the results', default = 'print')
-parser.add_argument('--source',default = 'help')
-parser.add_argument('--questionnaire_id',default = 'help')
-parser.add_argument('--question_id',default = 'help')
-parser.add_argument('--session_id',default = 'help')
-parser.add_argument('--option_id',default = 'help')
+parser.add_argument('--source',default = 'default')
+parser.add_argument('--questionnaire_id', default = 'default')
+parser.add_argument('--question_id', default = 'default')
+parser.add_argument('--session_id', default = 'default')
+parser.add_argument('--option_id', default = 'default')
 
 args = parser.parse_args()
 args = vars(args)
@@ -67,18 +69,46 @@ elif(scope == 'resetall'):
     url += '/admin/' + scope
 elif(scope == 'questionnaire_upd'):
     url += '/admin/' + scope
-    files = {'file': open(source, 'rb')}
+    if (source == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
+    try:
+        files = {'file': open(source, 'rb')}
+    except FileNotFoundError:
+        print('File was not found')
+        exit()
+    except:
+        print('An unexpected error has occured')
+        exit()
 elif(scope == 'resetq'):
     url += '/admin/' + scope + '/' + questionnaire_id
+    if (questionnaire_id == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
 elif(scope == 'questionnaire'):
     url += '/' + scope + '/' + questionnaire_id
+    if (questionnaire_id == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
 elif(scope == 'question'):
     url += '/' + scope + '/' + questionnaire_id + '/' + question_id 
+    if (questionnaire_id == 'default' or question_id == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
 elif(scope == 'doanswer'):
     url += '/' + scope + '/' + questionnaire_id + '/' + question_id + '/' + session_id + '/' + option_id
+    if (questionnaire_id == 'default' or question_id == 'default' or session_id == 'default' or option_id == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
 elif(scope == 'getsessionanswers'):
     url += '/' + scope + '/' + questionnaire_id + '/' + session_id
+    if (questionnaire_id == 'default' or session_id == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
 elif(scope == 'getquestionanswers'):
+    if (questionnaire_id == 'default' or question_id == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
     url += '/' + scope + '/' + questionnaire_id + '/' + question_id
 else:
     print('scope does not exit, run the program without any arguments to see the help message')
