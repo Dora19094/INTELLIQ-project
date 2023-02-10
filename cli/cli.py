@@ -84,9 +84,9 @@ else:
     print('scope does not exit, run the program without any arguments to see the help message')
     exit()
 if (scope in post):
-    x = requests.post(url)
+    x = requests.post(url,verify = False)
 elif(scope == 'questionnaire_upd'):
-    x = requests.post(url,files = files)
+    x = requests.post(url,files = files,verify = False)
 else:
     x = requests.get(url,verify = False)
 code = x.status_code
