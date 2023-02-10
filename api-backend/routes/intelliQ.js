@@ -143,6 +143,11 @@ router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, ne
                 answers: _.map(sortedAnswers,function(o){
                     q = _.find(qinfo, {qID : o.qID});
                     if (q == undefined) {error.message = "Wrong Qid matching";throw error};
+                    if (q.options.length == 1) return({
+                        qID : o.qID,
+                        qtext : q.qtext,
+                        anstxt : o.ans
+                    });
                     a = _.find(q.options,{optID : o.ans});
                     if (a == undefined) {error.message = "Wrong Optid matching";throw error};
                     return {
