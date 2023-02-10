@@ -3,12 +3,6 @@ import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function AnswerArea({ question, questionNum, session }) {
-
-
-
-
-
-
   const [answer, setAnswer] = useState();
   const navigate = useNavigate();
   //const nextqid = answer.optionID;
@@ -27,23 +21,6 @@ export default function AnswerArea({ question, questionNum, session }) {
       console.log(answer);
     }
   } 
-
-  
-  // const [nextqdata, setNextqData] = useState();
-  // useEffect(() => {
-    
-  //   const url = `http://localhost:3001/givenextqid/${question.questionnaireID}/${question.qID}/${answer.optionID}`
-  
-  //   const fetchData = 
-  //      fetch(url)
-  //       .then((response) => response.json())
-  //       .then((data) => {console.log(data); const d = [data]; setNextqData(d)});
-  
-    
-  //   fetchData();
-  //   console.log(nextqdata);
-  // }, []);
-
 
   function fetchNextQuestion(questionID) {
     console.log("hello");
@@ -79,11 +56,11 @@ export default function AnswerArea({ question, questionNum, session }) {
                 placeholder={question.options[0].opttxt}
                 onChange={(e) =>
                   setAnswer({
-                    optionID: e.target.value, //""  answer.optionID
+                    optionID: question.options[0].optId,
+                    optionText: e.target.value, //""  answer.optionID
                     session: session,
                     questionID: question.qID,
                     questionnaireID: question.questionnaireID,
-                    //nextqID: question.options[0].nextqID
                     nextqID: question.options[0].nextqID
                   })
                 }

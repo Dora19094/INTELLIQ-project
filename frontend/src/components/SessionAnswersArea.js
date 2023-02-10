@@ -1,32 +1,61 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ListGroup from 'react-bootstrap/ListGroup';
+import { ListGroupItem , Card} from "react-bootstrap";
+
 
 export default function SessionAnswersArea() {
-// const [ans, setAns] = useState();
-//   useEffect(() => {
-//     const url = `http://localhost:3001/getsessionanswers/${questionnaireID}/${session}`;
+ 
+ const [answer, setAns] = useState();
+
+ const params = useParams();
+ const questionnaireID = params.questionnaireID;
+ const session = params.session;
+
+   console.log(questionnaireID);
+   console.log(session);
+
+ useEffect(() => {
+    const url = `http://localhost:3001/getsessionanswers/${questionnaireID}/${session}`;
     
-//     const fetchData = async () => {
-//       await fetch(url)
-//         .then((response) => response.json())
-//         .then((data) => {console.log(data); const d = [data]; setAns(d)});
-//     };
+    const fetchData = async () => {
+      await fetch(url)
+        .then((response) => response.json())
+        .then((data) => {console.log(data); const d = [data]; setAns(d)});
+    }; //{console.log(data); const d = [data]; setAns(d)}
 
-//     fetchData();
-// }, [] ); 
-
-// ans.opttext
+    fetchData();
+   
+    console.log(answer);
+    console.log(questionnaireID);
+    console.log(session);
+}, [] ); 
 
   return (
-    <div>
-      answers!
-      {/* <div className="questionnaires-grid">
-      {ans.map((an) => (
-          <div className="d-flex justify-content-end">
-          <h3>{an.qtext
-          an.opttext}</h3>
-        </div>
-      ))}
-    </div> */}
+    <div className="d-flex justify-content-center"> 
+      <Card border="light" style={{ width: "600px", margin: "40px" }}>
+        <Card.Header style={{
+                textAlign: "left",
+                color: "white",
+                background: "#d2bed2",
+              }}>
+            <h1 style={{color: "white"}}>Your Answers </h1>
+        </Card.Header>
+        { answer&& (answer[0].answers.map((an) => (
+          <div className="div-card" key={answer.session}>
+            <ListGroup>
+              <ListGroupItem>
+                <div className="d-flex justify-content-left">
+                  <h5>{an.qtext}</h5>
+                  <h5>  |  </h5>
+                  <h5> {an.anstxt}</h5>
+                </div>
+              </ListGroupItem>
+            </ListGroup>
+          </div>
+          ))
+        )}
+      </Card>
     </div>
   )
 }
