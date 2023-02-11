@@ -4,6 +4,9 @@ const router = express.Router();
 const Blank = require('../models/blank');
 const Answers = require('../models/answer');
 const mongoose = require('mongoose');
+const Ajv = require("ajv");
+
+
 
 //1
 //To stop mongoDB windows_key + R => services.msc
@@ -17,6 +20,7 @@ router.get('/healthcheck',(req,res,next)=>{
 
 //2
 router.post('/questionnaire_upd',(req,res,next)=>{
+    //need to verify json schema
     let newBlank = new Blank(req.body);
     newBlank.save()
         .then(savedDoc => res.send({status:"OK"}))
