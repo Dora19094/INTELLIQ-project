@@ -1,5 +1,6 @@
 import argparse
 import requests
+import json 
 
 def result_handler(x,format):
     if format == 'json':
@@ -47,7 +48,7 @@ question_id = args.get('question_id','default')
 session_id = args.get('session_id','default')
 option_id = args.get('option_id','default')
 
-url = 'https://localhost:3000'
+url = 'http://localhost:3001'
 
 post = ['resetall','resetq','doanswer']
 
@@ -73,7 +74,7 @@ elif(scope == 'questionnaire_upd'):
         print('An argument was not given, run the program without any arguments to see the help message' )
         exit()
     try:
-        files = {'file': open(source, 'rb')}
+        f = open(source, 'rb')
     except FileNotFoundError:
         print('File was not found')
         exit()
@@ -110,13 +111,21 @@ elif(scope == 'getquestionanswers'):
         print('An argument was not given, run the program without any arguments to see the help message' )
         exit()
     url += '/' + scope + '/' + questionnaire_id + '/' + question_id
+#the elif below is the usecase code, work in progress
+elif(scope == 'answers_pie_chart'):
+    questionnaire_url = url + '/questionnaire/' + questionnaire_id
+    if (questionnaire_id == 'default'):
+        print('An argument was not given, run the program without any arguments to see the help message' )
+        exit()
 else:
     print('scope does not exit, run the program without any arguments to see the help message')
     exit()
 if (scope in post):
     x = requests.post(url,verify = False)
 elif(scope == 'questionnaire_upd'):
-    x = requests.post(url,files = files,verify = False)
+    data = json.load(f)
+    data = json.dumps(data)
+    x = requests.post(url,files = {'file': (None,data)},verify = False)
 else:
     x = requests.get(url,verify = False)
 code = x.status_code
