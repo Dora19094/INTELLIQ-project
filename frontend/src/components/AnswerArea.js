@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -56,8 +56,9 @@ export default function AnswerArea({ question, questionNum, session }) {
                 placeholder={question.options[0].opttxt}
                 onChange={(e) =>
                   setAnswer({
-                    optionID: question.options[0].optId,
-                    optionText: e.target.value, //""  answer.optionID
+                    optionID: e.target.value,
+                    //optionID: question.options[0].optId,
+                    //optionText: e.target.value, //""  answer.optionID
                     session: session,
                     questionID: question.qID,
                     questionnaireID: question.questionnaireID,
