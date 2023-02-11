@@ -191,12 +191,13 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res
         result.sort(function(a,b){
             return a.timestamp - b.timestamp; 
         });
+
         result = _.map(result,function(z){
-            if (z.answer.ans == undefined) return {session : z.session, ans: "skipped"};
-            return {
+            if (z.answer == undefined) return {session : z.session, ans: "skipped"};
+            else {return {
                     session: z.session,
                     ans : z.answer.ans
-                    };
+                    };}
         });
         let jdata = {
             questionnaireID: questionnaireID,
