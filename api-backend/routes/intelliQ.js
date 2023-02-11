@@ -192,6 +192,7 @@ router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res
             return a.timestamp - b.timestamp; 
         });
         result = _.map(result,function(z){
+            if (z.answer.ans == undefined) return {session : z.session, ans: "skipped"};
             return {
                     session: z.session,
                     ans : z.answer.ans
