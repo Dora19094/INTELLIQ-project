@@ -3,6 +3,12 @@ import requests
 import json 
 import matplotlib.pyplot as plt
 import numpy as np
+from urllib3.exceptions import InsecureRequestWarning
+ 
+ 
+# Suppress the warnings from urllib3
+requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
+
 
 def result_handler(x,format):
     if format == 'json':
