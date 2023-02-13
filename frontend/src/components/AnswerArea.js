@@ -14,7 +14,7 @@ export default function AnswerArea({ question, questionNum, session }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answer),
       }; //c. {baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID 
-      const url = `http://localhost:3001/doanswer/${question.questionnaireID}/${question.qID}/${session}/${answer.optionID}`
+      const url = `https://localhost:3001/doanswer/${question.questionnaireID}/${question.qID}/${session}/${answer.optionID}`
       await fetch(url, requestOptions).then(
        // (response) => response.json() // provokes error, ok when commenting it out
       );

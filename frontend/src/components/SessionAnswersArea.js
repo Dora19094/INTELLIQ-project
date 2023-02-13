@@ -16,7 +16,7 @@ export default function SessionAnswersArea() {
    console.log(session);
 
  useEffect(() => {
-    const url = `http://localhost:3001/getsessionanswers/${questionnaireID}/${session}`;
+    const url = `https://localhost:3001/getsessionanswers/${questionnaireID}/${session}`;
     
     const fetchData = async () => {
       await fetch(url)
