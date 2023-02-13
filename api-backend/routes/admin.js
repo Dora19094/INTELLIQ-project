@@ -4,8 +4,8 @@ const router = express.Router();
 const Blank = require('../models/blank');
 const Answers = require('../models/answer');
 const mongoose = require('mongoose');
-const Ajv = require("ajv");
-
+const multer = require("multer");
+const upload = multer();
 
 
 //1
@@ -19,9 +19,8 @@ router.get('/healthcheck',(req,res,next)=>{
 });
 
 //2
-router.post('/questionnaire_upd',(req,res,next)=>{
-    //need to verify json schema
-    let newBlank = new Blank(req.body);
+router.post('/questionnaire_upd',upload.none(),(req,res,next)=>{
+    let newBlank = new Blank(JSON.parse(req.body.file));
     newBlank.save()
         .then(savedDoc => res.send({status:"OK"}))
         .catch(err=>next(err));
