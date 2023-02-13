@@ -8,6 +8,8 @@ servers:
 paths:
   /admin/healthcheck:
     get:
+      tags:
+        - Admin
       description: Check the health of the API and the database connection
       responses:
         200:
@@ -38,6 +40,8 @@ paths:
                     example: mongodb://127.0.0.1/intelliQ
   /admin/questionnaire_upd:
     post:
+      tags:
+        - Admin
       description: Update the questionnaire
       requestBody:
         required: true
@@ -75,6 +79,8 @@ paths:
           
   /admin/resetall:
     post:
+      tags:
+        - Admin
       description: Reset all questionnaires and answers
       responses:
         200:
@@ -102,6 +108,8 @@ paths:
                     example: error message
   /admin/resetq/{questionnaireID}:
     post:
+      tags:
+        - Admin
       description: Reset a specific questionnaire and its answers
       parameters:
         - name: questionnaireID
@@ -137,6 +145,9 @@ paths:
   
   /questionnaire/{questionnaireID}:
     get:
+      tags:
+        - IntelliQ
+      summary: //a
       description: Retrieve a questionnaire by ID
       parameters:
         - in: path
@@ -218,4 +229,252 @@ paths:
                   error:
                     type: string
                     example: error message
-      
+  /question/{questionnaireID}/{questionID}:
+    get:
+      tags:
+        - IntelliQ
+      summary: //b
+      description: Returns a specific question of a questionnaire
+      parameters:
+        - in: path
+          name: questionnaireID
+          description: ID of the questionnaire
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: questionID
+          description: ID of the question
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: format
+          description: Format of the response data (json or csv)
+          required: false
+          schema:
+            type: string
+            enum: [json, csv]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questionnaireID:
+                    type: string
+                    description: ID of the questionnaire
+                  qID:
+                    type: string
+                    description: ID of the question
+                  qtext:
+                    type: string
+                    description: Text of the question
+                  required:
+                    type: string
+                    description: A boolean indicating whether the question is required or not
+                  type:
+                    type: string
+                    description: Type of the question (e.g. multiple choice, text)
+                  options:
+                    type: array
+                    description: Array of options for the question
+                    items:
+                      type: object
+                      properties:
+                        optID:
+                          type: string
+                          description: ID of the option
+                        opttxt:
+                          type: string
+                          description: Text of the option
+                        nextqID:
+                          type: string
+                          description: ID of the next question to be asked based on the selected option
+            text/csv:
+              schema:
+                type: string
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
+        402:
+          description: The questionnaire is empty or does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
+  /doanswer/{questionnaireID}/{questionID}/{session}/{optionID}:
+    post:
+      tags:
+        - IntelliQ
+      summary: //c
+      description: Endpoint that saves the selected question's answer for a specific session
+      parameters:
+        - name: questionnaireID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: questionID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: session
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: optionID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+      #needs update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /getsessionanswers/{questionnaireID}/{session}:
+
+    get:
+      tags:
+        - IntelliQ
+      summary: //d
+      description: Returns the answers of a questionnaire for a specific session
+      parameters:
+        - name: questionnaireID
+          in: path
+          required: true
+          description: ID of the questionnaire
+          schema:
+            type: string
+        - name: session
+          in: path
+          required: true
+          description: ID of the session
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: format of response data (either json or csv)
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully returned the answers for the specified questionnaire and session
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questionnaireID:
+                    type: string
+                  session:
+                    type: string
+                  answers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        qID:
+                          type: string
+                        qtext:
+                          type: string
+                        ans:
+                          type: string
+                        anstxt:
+                          type: string
+            text/csv:
+              schema:
+                type: string
+        400:
+          description: Format has to be set to either "json" or "csv"
+        402:
+          description: The questionnaire is empty or does not exist or Wrong Qid matching or Wrong Optid matching
+  
+  /getquestionanswers/{questionnaireID}/{questionID}:
+    get:
+      tags:
+        - IntelliQ
+      summary: //e
+      description: Endpoint that returns the answer of a specific question from a specific questionnaire for all sessions
+      parameters:
+        - name: questionnaireID
+          in: path
+          required: true
+          description: ID of the questionnaire
+          schema:
+            type: string
+        - name: questionID
+          in: path
+          required: true
+          description: ID of the question
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          description: The format of the response data, either "json" or "csv". If not provided, defaults to "json".
+          schema:
+            type: string
+            enum: [json, csv]
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questionnaireID:
+                    type: string
+                    description: ID of the questionnaire
+                  questionID:
+                    type: string
+                    description: ID of the question
+                  answers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        session:
+                          type: string
+                          description: Session ID
+                        ans:
+                          type: string
+                          description: Answer to the question
+            text/csv:
+              schema:
+                type: string
+        400:
+          description: Bad request, format has to be set to either "json" or "csv".
+        402:
+          description: The question or the questionnaire does not exist.
+          
