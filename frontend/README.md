@@ -2,6 +2,23 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+npx create-react-app my-app
+
+
+Windows(cmd.exe)
+set HTTPS=true&&npm start
+
+Windows(Powershell)
+($env:HTTPS = "true") -and (npm start)
+
+Linux, MacOS (Bash)
+HTTPS=true npm start
+
+For https in your browser:
+chrome://flags
+search: invalid certificate
+enable and relaunch
 ## Backend API library json-server
 
 In order to simulate the backend, we used json-server library dependency. We use it with the following command:
