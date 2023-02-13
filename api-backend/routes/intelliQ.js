@@ -9,7 +9,7 @@ const Answers = require('../models/answer.js');
 const json2csv = require('json2csv');
 
 
-//a
+//a)Endpoint that returns a specific questionnaire
 router.get('/questionnaire/:questionnaireID', function(req, res, next){ 
     BlankSchema.find({_id :req.params.questionnaireID})
     .then(function(data){ 
@@ -51,7 +51,7 @@ router.get('/questionnaire/:questionnaireID', function(req, res, next){
     .catch(err=>next(err));
 });
 
-//b
+//b)Endpoint that returns a specific question of a questionnaire
 router.get('/question/:questionnaireID/:questionID', function(req,res,next){ 
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
@@ -97,7 +97,7 @@ router.get('/question/:questionnaireID/:questionID', function(req,res,next){
     .catch(err=>next(err));
 });
 
-//c
+//c)Endpoint that saves the selected question's answer for a specific session
 router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', function(req,res,next){
     Answers.Answer.find({questionnaireId : req.params.questionnaireID, session : req.params.session},'answers')
     .then(function(data){
@@ -124,7 +124,7 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
     .catch(err=>next(err));
 });
 
-//d 
+//d)Endpoint that returns the answers of a questionnaire for a specific session
 router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, next) {
     const { questionnaireID, session } = req.params;
     BlankSchema.find({_id : req.params.questionnaireID}).then(blank => 
@@ -140,7 +140,8 @@ router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, ne
             let jdata = {
                 questionnaireID: data[0]._id,
                 session: data[0].session,
-                answers: _.map(sortedAnswers,function(o){
+                answers: _.map(sortedAnswers,function(o)
+                {
                     q = _.find(qinfo, {qID : o.qID});
                     if (q == undefined) {error.message = "Wrong Qid matching";throw error};
                     if (q.options.length == 1) return({
@@ -175,7 +176,7 @@ router.get('/getsessionanswers/:questionnaireID/:session', function(req, res, ne
 });
 
   
-//e 
+//e)Endpoint that returns the answer of a specific question from a specific questionnaire for all sessions
 router.get('/getquestionanswers/:questionnaireID/:questionID', function(req, res, next){
     const { questionnaireID, questionID } = req.params;
     Answers.Answer.find({ questionnaireID: questionnaireID, qID: questionID})
@@ -232,7 +233,7 @@ router.get('/questionnaires', function(req, res, next){
     .catch(err=>next(err));
 });
 
-// Endpoint that returns the required option
+// Endpoint that returns the required option of a specific question
 router.get('/givenextqid/:questionnaireID/:questionID/:optionID', function(req,res,next){ 
     BlankSchema.find({_id : req.params.questionnaireID},'questions')
     .then(function(data){
