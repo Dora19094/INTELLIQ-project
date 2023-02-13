@@ -1,0 +1,221 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Admin Routes API
+  description: API for managing questionnaires and answers in the intelliQ application
+servers:
+  - url: https://localhost:3001
+paths:
+  /admin/healthcheck:
+    get:
+      description: Check the health of the API and the database connection
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+                  dbconnection:
+                    type: string
+                    example: mongodb://127.0.0.1/intelliQ
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  dbconnection:
+                    type: string
+                    example: mongodb://127.0.0.1/intelliQ
+  /admin/questionnaire_upd:
+    post:
+      description: Update the questionnaire
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  dbconnection:
+                    type: string
+                    example: error message
+          
+  /admin/resetall:
+    post:
+      description: Reset all questionnaires and answers
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+        402:
+          description: No more data to be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
+  /admin/resetq/{questionnaireID}:
+    post:
+      description: Reset a specific questionnaire and its answers
+      parameters:
+        - name: questionnaireID
+          in: path
+          required: true
+          description: ID of the questionnaire to reset
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+        402:
+          description: Questionnaire does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: Questionnaire does not exist
+  
+  /questionnaire/{questionnaireID}:
+    get:
+      description: Retrieve a questionnaire by ID
+      parameters:
+        - in: path
+          name: questionnaireID
+          required: true
+          description: ID of the questionnaire to retrieve
+          schema:
+            type: string
+        - in: query
+          name: format
+          required: false
+          description: Output format for the questionnaire data
+          schema:
+            type: string
+            enum: [json, csv]
+      responses:
+        200:
+          description: Successfully retrieved the questionnaire
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questionnaireID:
+                    type: string
+                    description: ID of the questionnaire
+                  questionnaireTitle:
+                    type: string
+                    description: Title of the questionnaire
+                  keywords:
+                    type: array
+                    description: Keywords associated with the questionnaire
+                    items:
+                      type: string
+                  questions:
+                    type: array
+                    description: List of questions in the questionnaire
+                    items:
+                      type: object
+                      properties:
+                        qID:
+                          type: string
+                          description: ID of the question
+                        qtext:
+                          type: string
+                          description: Text of the question
+                        required:
+                          type: string
+                          description: Indicates if the question is required
+                        type:
+                          type: string
+                          description: Type of the question
+            text/csv:
+              schema:
+                type: string
+        400:
+          description: Bad Request - Format must be set to either json or csv
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
+        402:
+          description: The questionnaire is empty or does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
+      
