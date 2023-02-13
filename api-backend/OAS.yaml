@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Admin Routes API
+  title: Admin & IntelliQ Routes API
   description: API for managing questionnaires and answers in the intelliQ application
 servers:
   - url: https://localhost:3001
@@ -477,4 +477,106 @@ paths:
           description: Bad request, format has to be set to either "json" or "csv".
         402:
           description: The question or the questionnaire does not exist.
+
+  /questionnaires:
+    get:
+      summary: Retrieve a list of all available questionnaires
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    title:
+                      type: string
+                    questions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          qID:
+                            type: string
+                          qtext:
+                            type: string
+                          options:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                optID:
+                                  type: string
+                                nextqID:
+                                  type: string
+                                opttext:
+                                  type: string
+        402:
+          description: Error response indicating that no questionnaires have been saved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      security: []
+
+
+  /givenextqid/{questionnaireID}/{questionID}/{optionID}:
+    get:
+      summary: Retrieve the next question based on the provided questionnaireID, questionID, and optionID
+      parameters:
+        - in: path
+          name: questionnaireID
+          description: The ID of the questionnaire
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: questionID
+          description: The ID of the question
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: optionID
+          description: The ID of the option
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  optID:
+                    type: string
+                  nextqID:
+                    type: string
+                  opttext:
+                    type: string
+        402:
+          description: Error response indicating that the questionnaire, question, or option does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      security: []
+
+  
           
