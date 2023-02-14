@@ -37,21 +37,24 @@ router.post('/resetall',(req,res,next)=>{
                     next(err_blank);
                 } else {
                     try{
-                        if(!data_answers.length && !data_blank.length){
+                        if(data_answers.length==0 && data_blank.length==0){
                             const error = new Error("No more data to be deleted");
                             error.status = "402";
                             throw error;
-                        } else if(data_answers.length && data_blank.length){
+                        } else if(data_answers.length>0 && data_blank.length>0){
                             Answers.Answer.deleteMany({})
-                                .then(Blank.deleteMany({}))
-                                .then(res.send({status:"OK"}))
+                                .then(
+                                    Blank.deleteMany({})
+                                        .then(res.send({status:"OK"}))
+                                )
                                 .catch(err=>next(err))
-                        } else if(data_answers.length){
+                                
+                        } else if(data_blank.length==0){
                             Answers.Answer.deleteMany({})
                                 .then(res.send({status:"OK"}))
                                 .catch(err=>next(err))
                         }
-                        else if(data_blank.length){
+                        else if(data_answers.length==0){
                             Blank.deleteMany({})
                                 .then(res.send({status:"OK"}))
                                 .catch(err=>next(err))
