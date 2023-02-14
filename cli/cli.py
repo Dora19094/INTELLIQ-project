@@ -244,4 +244,4 @@ else:
 code = x.status_code
 if(scope != 'doanswer'):
     result_handler(x,format)
-#error_code_handler(code)
+error_code_handler(code)
