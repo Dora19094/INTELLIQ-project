@@ -5,6 +5,92 @@ info:
   description: API for managing questionnaires and answers in the intelliQ application
 servers:
   - url: https://localhost:3001
+  
+components:
+  schemas:
+    Option:
+      type: object
+      properties:
+        optID:
+          type: string
+          description: Option id
+          example: "001"
+        opttxt:
+          type: string
+          description: Option's text
+          example: "Option 1"
+        nextqID:
+          type: string
+          default: "NULL"
+          description: ID of the next question
+          example: "002"
+
+    Question:
+      type: object
+      properties:
+        qID:
+          type: string
+          description: Question id
+          example: "001"
+        qtext:
+          type: string
+          description: Question text
+          example: "What is your favorite color?"
+        required:
+          type: boolean
+          description: Indicates if the question is required or not
+          example: true
+        type:
+          type: string
+          description: Question type
+          example: "single-choice"
+        options:
+          type: array
+          items:
+            $ref: "#/components/schemas/Option"
+          description: List of options for the question
+
+    BlankSchema:
+      type: object
+      properties:
+        questionnaireTitle:
+          type: string
+          description: Title of the questionnaire
+          example: "Sample Questionnaire"
+        keywords:
+          type: array
+          items:
+            type: string
+          description: Keywords related to the questionnaire
+          example: ["survey", "feedback"]
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Question"
+          description: List of questions in the questionnaire
+
+  examples:
+    BlankSchema:
+      summary: Example of a BlankSchema schema
+      value:
+        questionnaireTitle: "Sample Questionnaire"
+        keywords: ["survey", "feedback"]
+        questions:
+          - qID: "001"
+            qtext: "What is your favorite color?"
+            required: true
+            type: "single-choice"
+            options:
+              - optID: "001"
+                opttxt: "Red"
+              - optID: "002"
+                opttxt: "Blue"
+          - qID: "002"
+            qtext: "What is your age?"
+            required: false
+            type: "text"
+
+
 paths:
   /admin/healthcheck:
     get:
@@ -640,6 +726,43 @@ paths:
                     type: string
                   status:
                     type: string
+                                    
+  /holeBlank/{questionnaireID}:
+    get:
+      tags:
+        - IntelliQ
+      summary: Extra endpoint
+      description: Retrieve a hole questionnaire
+      parameters:
+        - in: path
+          name: questionnaireID
+          required: true
+          schema:
+            type: string
+          description: The ID of the questionnaire to retrieve
+      responses:
+        '200':
+          description: A successful response with the requested questionnaire
+          content:
+            application/json:
+                schema:
+                  $ref: "#/components/schemas/BlankSchema"
+                example:
+                  $ref: "#/components/examples/BlankSchema"
+                
+        '402':
+          description: No questionnaire found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: No questionnaire found
 
   
           
