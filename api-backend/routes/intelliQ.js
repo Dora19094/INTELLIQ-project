@@ -106,6 +106,8 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
             new_ans.ans = req.params.optionID;
         if (data[0] != undefined)
         {
+            let ch = _.find(data[0].answers,{qID : new_ans.qID});
+            if (ch != undefined) {let err = new Error("That question has already been answered!");err.status = "400";throw err;};
             data[0].answers.push(new_ans);
             data[0].save().catch(err=>res.send({status:"failed", reason:err.message}));    //it creates an _id for that object/we ignore for now
             res.send();
@@ -114,8 +116,6 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
             let newAnswersheet = new Answers.Answer();
             newAnswersheet.questionnaireID = req.params.questionnaireID;
             newAnswersheet.session = req.params.session;
-            let ch = _.find(data[0].answers,{qID : new_ans.qID});
-            if (ch != undefined) {let err = new Error("That question has already been answered!");err.status = "400";throw err;};
             newAnswersheet.answers.push(new_ans); 
             console.log(newAnswersheet);
             newAnswersheet.save().catch(err=>res.send({status:"failed", reason:err.message})); 
