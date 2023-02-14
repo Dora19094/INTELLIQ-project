@@ -242,5 +242,6 @@ elif(scope == 'questionnaire_upd'):
 else:
     x = requests.get(url,verify = False)
 code = x.status_code
-result_handler(x,format)
+if(scope != 'doanswer'):
+    result_handler(x,format)
 #error_code_handler(code)
