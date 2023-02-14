@@ -762,7 +762,4 @@ paths:
                     example: failed
                   error:
                     type: string
-                    example: No questionnaire found
-
-  
-          
+                    example: No questionnaire found        
