@@ -44,14 +44,15 @@ paths:
         - Admin
       description: Update the questionnaire
       requestBody:
-        required: true
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
-                file:
+                json_file:
                   type: string
+                  format: binary
+                  description: JSON file (Blank questionnaire) encoded in multipart form data
       responses:
         200:
           description: OK
@@ -93,8 +94,8 @@ paths:
                   status:
                     type: string
                     example: OK
-        402:
-          description: No more data to be deleted
+        400:
+          description: Error
           content:
             application/json:
               schema:
@@ -129,6 +130,19 @@ paths:
                   status:
                     type: string
                     example: OK
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
         402:
           description: Questionnaire does not exist
           content:
@@ -148,7 +162,7 @@ paths:
       tags:
         - IntelliQ
       summary: //a
-      description: Retrieve a questionnaire by ID
+      description: Retrieve a questionnaire by ID. Questions are sorted in alphabetical order.
       parameters:
         - in: path
           name: questionnaireID
@@ -234,7 +248,7 @@ paths:
       tags:
         - IntelliQ
       summary: //b
-      description: Returns a specific question of a questionnaire
+      description: Returns a specific question and it's options of a questionnaire. Options are sorted by option id.
       parameters:
         - in: path
           name: questionnaireID
@@ -415,16 +429,38 @@ paths:
               schema:
                 type: string
         400:
-          description: Format has to be set to either "json" or "csv"
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
         402:
-          description: The questionnaire is empty or does not exist or Wrong Qid matching or Wrong Optid matching
+          description: The questionnaire is empty or does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
   
   /getquestionanswers/{questionnaireID}/{questionID}:
     get:
       tags:
         - IntelliQ
       summary: //e
-      description: Endpoint that returns the answer of a specific question from a specific questionnaire for all sessions
+      description: Returns the answer of a specific question from a specific questionnaire for all sessions.
       parameters:
         - name: questionnaireID
           in: path
@@ -474,13 +510,38 @@ paths:
               schema:
                 type: string
         400:
-          description: Bad request, format has to be set to either "json" or "csv".
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
         402:
-          description: The question or the questionnaire does not exist.
+          description: The question of the questionnaire does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  error:
+                    type: string
+                    example: error message
 
   /questionnaires:
     get:
-      summary: Retrieve a list of all available questionnaires
+      tags:
+        - IntelliQ
+      summary: extra endpoint
+      description: Retrieve a list of all available questionnaires
       responses:
         200:
           description: Successful response
@@ -531,7 +592,10 @@ paths:
 
   /givenextqid/{questionnaireID}/{questionID}/{optionID}:
     get:
-      summary: Retrieve the next question based on the provided questionnaireID, questionID, and optionID
+      tags:
+        - IntelliQ
+      summary: extra endpoint
+      description: Retrieve the next question based on the provided questionnaireID, questionID, and optionID
       parameters:
         - in: path
           name: questionnaireID
@@ -576,7 +640,6 @@ paths:
                     type: string
                   status:
                     type: string
-      security: []
 
   
           

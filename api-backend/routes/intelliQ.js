@@ -253,5 +253,22 @@ router.get('/givenextqid/:questionnaireID/:questionID/:optionID', function(req,r
     .catch(err=>next(err));
 });
 
+//Extra endpoint that returns the hole questionnaire
+router.get('/holeBlank/:questionnareID',function(req,res,next){
+    BlankSchema.find({_id:req.params.questionnareID})
+        .then(function(data){
+            if(data[0]==undefined){
+                const error = new Error("No questionnaire found")
+                error.status = '402'
+                throw error;
+            }
+            else{
+                res.send(data[0]);   
+            }
+        })
+        .catch(err=>next(err))
+})
+
+
 
 module.exports = router;
