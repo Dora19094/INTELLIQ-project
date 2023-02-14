@@ -17,6 +17,10 @@ def result_handler(x,format):
     if format == 'csv':
         res = x.text
     if file == 'print':
+        if (format == 'json'):
+            res = json.dumps(res, indent = 2, ensure_ascii = False).encode('utf8')
+            print(res.decode())
+            return
         print(res)
     else:
         f = open(file,'w')
@@ -189,7 +193,8 @@ elif(scope == 'questions_data'):
             if dict[i] == 0:
                 temp.append(i)
         for i in temp:
-            del dict[i]
+            if dict.get(i,'default') != 'default':
+                del dict[i]
         data = []
         labels = [] 
         qnum = qdict[question_id][0]
