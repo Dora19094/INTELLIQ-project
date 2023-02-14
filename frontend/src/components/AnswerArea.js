@@ -29,7 +29,7 @@ export default function AnswerArea({ question, questionNum, session }) {
     console.log(questionID);
     console.log(question.questionnaireID);
 
-    if (answer.nextqID === "-") { //question.options[0].nextqID
+    if (answer.nextqID === "-" || questionID == "-") { //CHANGED
       navigate(
         `/question/${question.questionnaireID}/${session}/submit`,
         {});
@@ -101,8 +101,8 @@ export default function AnswerArea({ question, questionNum, session }) {
           variant="secondary"
           disabled={question.required === "TRUE"}
           onClick={() => {
-            fireAnswer();
-            fetchNextQuestion(answer.nextqID); //question.options[0].nextqID
+            //fireAnswer(); //CHANGED
+            fetchNextQuestion(question.options[0].nextqID); //question.options[0].nextqID //CHANGED
           }}
         >
           Skip
@@ -110,8 +110,8 @@ export default function AnswerArea({ question, questionNum, session }) {
         <Button
           variant="primary"
           onClick={() => {
-            fireAnswer();
-            fetchNextQuestion(answer.nextqID); //question.options[0].nextqID
+            fireAnswer();   
+            fetchNextQuestion(answer.nextqID); //question.options[0].nextqID 
           }}
         >
           Next
