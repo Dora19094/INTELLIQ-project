@@ -23,6 +23,8 @@ def result_handler(x,format):
             return
         print(res)
     else:
+        if (format != 'csv'):
+            res = json.dumps(res)
         f = open(file,'w')
         f.write(res)
         f.close()
