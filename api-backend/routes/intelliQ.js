@@ -114,7 +114,7 @@ router.post('/doanswer/:questionnaireID/:questionID/:session/:optionID', functio
             let newAnswersheet = new Answers.Answer();
             newAnswersheet.questionnaireID = req.params.questionnaireID;
             newAnswersheet.session = req.params.session;
-            let ch = _.find(newAnswersheet.answers,{qID : new_ans.qID});
+            let ch = _.find(data[0].answers,{qID : new_ans.qID});
             if (ch != undefined) {let err = new Error("That question has already been answered!");err.status = "400";throw err;};
             newAnswersheet.answers.push(new_ans); 
             console.log(newAnswersheet);
