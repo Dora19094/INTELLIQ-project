@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "fbc35159-2784-449f-af36-2f5eb41351ca",
+		"name": "API-endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25148096"
+	},
+	"item": [
+		{
+			"name": "Show All Questionnaires",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/questionnaires",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"questionnaires"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show one Questionnaire",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/questionnaire/63e56236f160cada4f81f95d",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"questionnaire",
+						"63e56236f160cada4f81f95d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Question",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/question/63e56236f160cada4f81f95d/Q03",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"question",
+						"63e56236f160cada4f81f95d",
+						"Q03"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Answer Question",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/doanswer/63e56236f160cada4f81f95d/Q03/5555/Q03A1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"doanswer",
+						"63e56236f160cada4f81f95d",
+						"Q03",
+						"5555",
+						"Q03A1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Answers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/getsessionanswers/63e56236f160cada4f81f95d/5555",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"getsessionanswers",
+						"63e56236f160cada4f81f95d",
+						"5555"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
