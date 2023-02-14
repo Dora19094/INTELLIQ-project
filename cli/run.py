@@ -62,8 +62,8 @@ subprocess.run(extended_path + question_id + middle_path + option_id)
 input("Press enter for next question")
 
 #Q04
-question_id = 'Q02'
-option_id = 'Q02A2'
+question_id = 'Q04'
+option_id = 'Q04A2'
 print(f'Question: {question_id}. Option: {option_id}')
 subprocess.run(extended_path + question_id + middle_path + option_id)
 input("Press enter for next question")
@@ -102,20 +102,15 @@ print(f'Question: {question_id}. Option: {option_id}')
 subprocess.run(extended_path + question_id + middle_path + option_id)
 input("Press enter to continue")
 
-
-
-
+print("----------------------------------------------------------------------------------------------")
+print("Show all answers of a question over all sessions")
+subprocess.run(path + ' getquestionanswers --questionnaire_id ' + questionnaire_id + ' --question_id ' + question_id)
+input('\nPress Enter to continue\n')
 
 print("----------------------------------------------------------------------------------------------")
 print("Statistics\n")
 subprocess.run(path + " questions_data --questionnaire_id " + questionnaire_id)
 input("Press enter to continue")
-
-
-print("----------------------------------------------------------------------------------------------")
-print("Show all answers of a question over all sessions")
-subprocess.run(path + ' getquestionanswers --questionnaire_id ' + questionnaire_id + ' --question_id ' + question_id)
-input('\nPress Enter to continue\n')
 
 print("----------------------------------------------------------------------------------------------")
 print("Reset all")
