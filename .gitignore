@@ -1,3 +1,6 @@
 /api-backend/node_modules
 /data/Q1/Answered1.json
 /data/Q2/Answered2.json
+/data/Q1/node_modules
+/data/Q2/node_modules
+/frontend/my/node_modules
