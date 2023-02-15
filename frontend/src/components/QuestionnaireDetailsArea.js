@@ -13,7 +13,7 @@ export function QuestionnaireDetailsArea() {
 
   //a. {baseURL}/questionnaire/:questionnaireID
   useEffect(() => {
-    const url = `https://localhost:3001/questionnaire/${questionnaireID}`;
+    const url = `https://localhost:3001/intelliq_api/questionnaire/${questionnaireID}`;
 
     const fetchData = async () => {
       await fetch(url)

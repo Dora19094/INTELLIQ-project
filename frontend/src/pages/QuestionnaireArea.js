@@ -9,7 +9,7 @@ export function QuestionnaireArea() {
   const [questionnaires, setQuestionnare] = useState([]);
 
   //extra endpoint that gives me all questionnaires so i can display them as cards 
-  const url = "https://localhost:3001/questionnaires";
+  const url = "https://localhost:3001/intelliq_api/questionnaires";
   useEffect(() => {
     const fetchData = async () => {
       console.log("test");
