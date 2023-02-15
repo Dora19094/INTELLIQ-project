@@ -11,7 +11,7 @@ export default function QuestionArea() {
   useEffect(() => {
     // the following url is the right one for the final API Backend
      //const url = `http://localhost:3001/question?questionnaireID=${state.questionnaireID}?questionID=${state.questionID}`;
-    const url = `https://localhost:3001/question/${state.questionnaireID}/${state.questionID}`
+    const url = `https://localhost:3001/intelliq_api/question/${state.questionnaireID}/${state.questionID}`
 
     // due to json-server, cannot simulate the right url so i tested the following one
     // const url = `http://localhost:3001/questions?qID=${state.questionID}`;
