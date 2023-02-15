@@ -2,14 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 
 export default function SumbitArea() {
- // const [dataAnswers, setDataAnswers] = useState([]);
   const {questionnaireID , session} = useParams();
-  //const {session} = useParams();
   const navigate = useNavigate();
-  //const [sessionanswers, setSessionAnswers] = useState();
 
   function getsessionanswers() {
-   navigate(`/getsessionanswers/${questionnaireID}/${session}`, {}
+   navigate(`/getsessionanswers/${questionnaireID}/${session}`, {} //navigate to view your answers
     );
 } 
   return (
@@ -30,7 +27,7 @@ export default function SumbitArea() {
       </Button>
       <Button
         variant="primary"
-        onClick={() => navigate("/questionnaires")}
+        onClick={() => navigate("/questionnaires")} //navigate to browse other questionnaires 
       >
         Return to questionnaires
       </Button>

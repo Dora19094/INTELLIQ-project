@@ -12,9 +12,10 @@ export default function SessionAnswersArea() {
  const questionnaireID = params.questionnaireID;
  const session = params.session;
 
-   console.log(questionnaireID);
-   console.log(session);
+   //console.log(questionnaireID);
+   //console.log(session);
 
+  // d. {baseURL}/getsessionanswers/:questionnaireID/:session
  useEffect(() => {
     const url = `https://localhost:3001/getsessionanswers/${questionnaireID}/${session}`;
     
@@ -22,13 +23,11 @@ export default function SessionAnswersArea() {
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {console.log(data); const d = [data]; setAns(d)});
-    }; //{console.log(data); const d = [data]; setAns(d)}
+    }; 
 
     fetchData();
-   
-    console.log(answer);
-    console.log(questionnaireID);
-    console.log(session);
+    //console.log(questionnaireID);
+    //console.log(session);
 }, [] ); 
 
   return (
@@ -42,7 +41,7 @@ export default function SessionAnswersArea() {
             <h1 style={{color: "white"}}>Your Answers </h1>
         </Card.Header>
         { answer&& (answer[0].answers.map((an) => (
-          <div className="div-card" key={answer.session}>
+          <div className="div-card" key={an.ans}> 
             <ListGroup>
               <ListGroupItem>
                 <div className="d-flex justify-content-left">

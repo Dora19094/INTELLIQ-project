@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 export default function AnswerArea({ question, questionNum, session }) {
   const [answer, setAnswer] = useState();
   const navigate = useNavigate();
-  //const nextqid = answer.optionID;
   async function fireAnswer() {
-    //console.log(question);
+
+    //c. {baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID
     if (answer) {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answer),
-      }; //c. {baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID 
+      }; 
       const url = `https://localhost:3001/doanswer/${question.questionnaireID}/${question.qID}/${session}/${answer.optionID}`
       await fetch(url, requestOptions).then(
        // (response) => response.json() // provokes error, ok when commenting it out
@@ -23,19 +23,19 @@ export default function AnswerArea({ question, questionNum, session }) {
   } 
 
   function fetchNextQuestion(questionID) {
-    console.log("hello");
-    console.log(answer.nextqID);
-    console.log(question);
-    console.log(questionID);
-    console.log(question.questionnaireID);
+    // console.log("hello");
+    // console.log(answer.nextqID);
+    // console.log(question);
+    // console.log(questionID);
+    // console.log(question.questionnaireID);
 
-    if (answer.nextqID === "-" || questionID == "-") { //CHANGED
+    if (questionID === "-") {  //if there is no next question then navigate to submit page 
       navigate(
         `/question/${question.questionnaireID}/${session}/submit`,
         {});
     } else {
-      navigate(`/question/${question.questionnaireID}/${questionID}`, { //questionID
-        state: {
+      navigate(`/question/${question.questionnaireID}/${questionID}`, {  //else navigate to next question & pass those parameters
+        state: { 
           questionnaireID: question.questionnaireID,
           questionID: questionID,
           questionNum: questionNum + 1,
@@ -48,7 +48,7 @@ export default function AnswerArea({ question, questionNum, session }) {
   if (question) {
     return (
       <div>
-        {question.options.length === 1 ? (
+        {question.options.length === 1 ? ( //if the length of the option is 1 then it's input text 
           <Card>
             <Card.Body>
               <Card.Title style={{ marginBottom: "15px" }}>Answer</Card.Title>
@@ -56,9 +56,7 @@ export default function AnswerArea({ question, questionNum, session }) {
                 placeholder={question.options[0].opttxt}
                 onChange={(e) =>
                   setAnswer({
-                    optionID: e.target.value,
-                    //optionID: question.options[0].optId,
-                    //optionText: e.target.value, //""  answer.optionID
+                    optionID: e.target.value, //what the user typed, goes into optID (might have been better if it was optionText but it would need different implementation on backend etc.)
                     session: session,
                     questionID: question.qID,
                     questionnaireID: question.questionnaireID,
@@ -68,7 +66,7 @@ export default function AnswerArea({ question, questionNum, session }) {
               ></input>
             </Card.Body>
           </Card>
-        ) : (
+        ) : ( // if the length is not 1 then it's multiple choice
           <div>
             <Card>
               <Card.Body>
@@ -81,8 +79,7 @@ export default function AnswerArea({ question, questionNum, session }) {
                       type="radio"
                       onChange={(e) =>
                         setAnswer({
-                          //e.target.checked   e.target.value
-                          optionID: e.target.value,
+                          optionID: e.target.value, //what the user chose as an answer
                           session: session,
                           questionID: question.qID,
                           questionnaireID: question.questionnaireID,
@@ -99,10 +96,10 @@ export default function AnswerArea({ question, questionNum, session }) {
         )}
         <Button
           variant="secondary"
-          disabled={question.required === "TRUE"}
+          disabled={question.required === "true"}  //if it's required then disable skip button
           onClick={() => {
-            //fireAnswer(); //CHANGED
-            fetchNextQuestion(question.options[0].nextqID); //question.options[0].nextqID //CHANGED
+            //no need to POST if they skip, fetch next question based on option 0's next question ID
+            fetchNextQuestion(question.options[0].nextqID); 
           }}
         >
           Skip
@@ -110,8 +107,8 @@ export default function AnswerArea({ question, questionNum, session }) {
         <Button
           variant="primary"
           onClick={() => {
-            fireAnswer();   
-            fetchNextQuestion(answer.nextqID); //question.options[0].nextqID 
+            fireAnswer();   //POST 
+            fetchNextQuestion(answer.nextqID);  //fetch next question based on the chosen option's next questionID
           }}
         >
           Next

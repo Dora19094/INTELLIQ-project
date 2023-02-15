@@ -8,8 +8,8 @@ import "./QuestionnaireArea.css";
 export function QuestionnaireArea() {
   const [questionnaires, setQuestionnare] = useState([]);
 
+  //extra endpoint that gives me all questionnaires so i can display them as cards 
   const url = "https://localhost:3001/questionnaires";
-//url and _id
   useEffect(() => {
     const fetchData = async () => {
       console.log("test");
@@ -22,11 +22,11 @@ export function QuestionnaireArea() {
     if (questionnaires) {
       // console.log(questionnaires[0].questionnaireID);
     }
-  }, [] ); //[]
+  }, [] ); //[] fetch everytime the page reloads
 
   return (
     <div className="questionnaires-grid">
-      {questionnaires.map((questionnaire) => (
+      {questionnaires.map((questionnaire) => ( //map the questionnaires into an array 
         <div className="div-card" key={questionnaire._id}>
           <div className="d-flex justify-content-center">
             <img

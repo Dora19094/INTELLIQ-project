@@ -7,7 +7,7 @@ export default function QuestionArea() {
   const { state } = useLocation();
   const [questionData, setQuestionData] = useState();
 
-
+//b. {baseURL}/question/:questionnaireID/:questionID
   useEffect(() => {
     // the following url is the right one for the final API Backend
      //const url = `http://localhost:3001/question?questionnaireID=${state.questionnaireID}?questionID=${state.questionID}`;
@@ -27,12 +27,12 @@ export default function QuestionArea() {
    //console.log(fetchData);
     fetchData();
    // if(questionData)
-    console.log(questionData);
+    //console.log(questionData);
 
-  }, [state.questionID]); //[[state.questionID]]
+  }, [state.questionID]); //[state.questionID] fetch everytime that changes 
   return (
     <>
-      {questionData && (
+      {questionData && ( //if the questionData is defined
         <div style={{ margin: "40px" }}>
           <Card>
             <Card.Body>
@@ -46,8 +46,6 @@ export default function QuestionArea() {
             question={questionData[0]}
             questionNum={state.questionNum}
             session={state.session}
-            //option = {state.question.option[0].optID}
-           // questionnaireID={state.questionnaireID} //}/getsessionanswers/:questionnaireID/:session
           ></AnswerArea>
         </div>
       )}
