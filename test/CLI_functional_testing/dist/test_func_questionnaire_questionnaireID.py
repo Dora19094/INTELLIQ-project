@@ -9,16 +9,17 @@ def contains_two_words(text, word1, word2):
     return word1 in text and word2 in text
 
 
-# Replace "myexe.exe" with the name of your .exe file, and "arg1" and "arg2" with any command-line arguments it expects
+
 command = ["python","cli.py", "questionnaire","--questionnaire_id","63e9405366b76729edd6d135"] 
 
-# Call the command and capture the output
+# Here we are running the API call questionnaire with the respecitve questionnaire_id.We are also capturing the output.
 result = subprocess.run(command, stdout=subprocess.PIPE)
+# Here we are converting the captured stdout to a string,so we can do the testing easier.
 output_str = result.stdout.decode('utf-8')
 
 print(output_str)
 
-
+#We are checking if the outcome of the API call has the right questionnaire_id and title.
 id_ = '"63e9405366b76729edd6d135"'
 title = '"Online Shopping attitudes"'
 

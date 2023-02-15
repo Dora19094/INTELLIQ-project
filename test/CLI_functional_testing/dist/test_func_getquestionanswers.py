@@ -10,16 +10,16 @@ os.environ['PYTHONIOENCODING'] = 'utf-8'
 def contains_two_words(text, word1, word2):
     return word1 in text and word2 in text
 
-# Replace "myexe.exe" with the name of your .exe file, and "arg1" and "arg2" with any command-line arguments it expects
 command = ["python", "cli.py", "getquestionanswers", "--questionnaire_id",  "63e9404266b76729edd6d133", "--question_id", "P00"]
 
+# Here we are running the API call getquestionanswers with the respecitve questionnaire_id and question_id.We are also capturing the output.
 result = subprocess.run(command, stdout=subprocess.PIPE)
 
-# Convert the captured stdout to a string
+# Here we are converting the captured stdout to a string,so we can do the testing easier.
 output_str = result.stdout.decode('utf-8')
  
 print(output_str)
-
+#We are checking if the outcome of the API call has the right questionnaire_id and question_id.
 id_ = '"63e9404266b76729edd6d133"'
 question_id = '"P00"'
 
