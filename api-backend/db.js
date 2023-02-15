@@ -1,8 +1,3 @@
-//UNDER DEVELOPMENT
-//DONT MIND ABOUT THIS CODE
-//Hey there
-
-// db.js
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://127.0.0.1/intelliQ', {

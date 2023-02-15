@@ -1,6 +1,3 @@
-//UNDER DEVELOPMENT
-//DONT MIND ABOUT THIS CODE
-
 const express = require('express');
 const bodyParser = require('body-parser');
 var cors = require('cors');
@@ -18,10 +15,10 @@ const connection = require('./db');
 app.use(bodyParser.json());
 
 //admin endpoints
-app.use('/admin',require('./routes/admin.js'));
+app.use('/intelliq_api/admin', require('./routes/admin.js'));
 
 //intelliQ routes
-app.use(require('./routes/intelliQ.js'));
+app.use('/intelliq_api', require('./routes/intelliQ.js'));
 
 //errors from bad requests
 app.all('*',(req,res,next)=>{

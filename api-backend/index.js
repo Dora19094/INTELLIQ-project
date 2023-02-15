@@ -1,7 +1,3 @@
-//UNDER DEVELOPMENT
-//DONT MIND ABOUT THIS CODE
-
-// index.js
 const app = require('./app');
 const https = require('https');
 const fs = require('fs');

@@ -9,35 +9,33 @@ export function QuestionnaireDetailsArea() {
 
   function createRandomString(max) {
     return Math.floor(Math.random() * max) + 1000;
-    // return "xyzw";
   }
 
+  //a. {baseURL}/questionnaire/:questionnaireID
   useEffect(() => {
-    // const url = `http://localhost:3001/questionnaires/${questionnaireID}`;
     const url = `https://localhost:3001/questionnaire/${questionnaireID}`;
-    //const url = `http://localhost:3001/questionnaires/${_id}`;
-    //questionnsireID -> _id
-    // const data = fetch(url).then((response) => response.json());
-    //console.log(questionnaireID);
 
     const fetchData = async () => {
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {console.log(data); const d = [data]; setQuestionnare(d)});
-    };
+    }; //if you want to run the json server instead of the backend you need to change:
+    //   this     .then((data) => {console.log(data); const d = [data]; setQuestionnare(d)});
+    //   to this  .then(data) => {setQuestionnaire(data)}
+    // and do it on every component
 
     fetchData();
     if (questionnaire) {
-      console.log(questionnaire);
+      //console.log(questionnaire);
      // console.log(questionnaire[0]._id);
     } // we add [0] because resource is & returns a list
   }, [] ); 
 
   function fetchQuestion(questionnaire) {
     // const url = `http://localhost:3001/question/${questionnaire.questionnaireID}/${questionnaire.qID}}`;
-    const paramQuestionnaireID = questionnaire.questionnaireID; //_id
+    const paramQuestionnaireID = questionnaire.questionnaireID; //_id on db
     const temp = questionnaire.questions[0];
-    // there was a space on "qID " on json-server so we added one here too.
+    // there was a space on "qID " on json-server so add one here too if you run json server, if you run backend then its ok.
     const paramQuestionID = temp["qID"];
     const paramSession = createRandomString(9999);
 
@@ -53,7 +51,7 @@ export function QuestionnaireDetailsArea() {
 
   return (
     <div>
-      {questionnaire && (
+      {questionnaire && ( //if the questionnaire is defined
         <div className="d-flex justify-content-center">
           <Card border="light" style={{ width: "600px", margin: "40px" }}>
             <Card.Header
@@ -64,7 +62,7 @@ export function QuestionnaireDetailsArea() {
                 background: "#d2bfd3",
               }}
             >
-              {questionnaire[0].questionnaireTitle //here
+              {questionnaire[0].questionnaireTitle 
               }
             </Card.Header>
             <Card.Img variant="top" />
@@ -72,7 +70,7 @@ export function QuestionnaireDetailsArea() {
               <Card.Text style={{ textAlign: "center", color: "#483d8b" }}>
                 Total Questions:
                 {questionnaire[0].questions &&
-                  questionnaire[0].questions.length //here too
+                  questionnaire[0].questions.length  //see the total number of questions on this questionnaire
                   }
               </Card.Text>
               <Card.Text style={{ textAlign: "center", color: "#483d8b" }}>
@@ -80,7 +78,7 @@ export function QuestionnaireDetailsArea() {
                 {
                   questionnaire[0].questions.filter(
                     (question) => question.type === "profile"
-                  ).length //here too
+                  ).length  //see how many questions with profile type there are on this questionnaire
                 }
               </Card.Text>
               <div
@@ -92,9 +90,7 @@ export function QuestionnaireDetailsArea() {
                   style={{
                     position: "relative",
                   }}
-                  // as={Link}
-                  // to={`/question/${questionnaire[0].questionnaireID}/${questionnaire[0].questions[0].qID}`}
-                  onClick={() => fetchQuestion(questionnaire[0])} // questionnaire[0] need to fix error here - only fetches the 1st questionnaire
+                  onClick={() => fetchQuestion(questionnaire[0])} 
                 > 
                   Start
                 </Button>
