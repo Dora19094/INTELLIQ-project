@@ -1,5 +1,5 @@
 import argparse
-
+#this is only used to test the parser
 #define the parser and its arguments
 parser = argparse.ArgumentParser(description='command Line Interface')
 parser.add_argument('scope', nargs = '?', default = 'help')
