@@ -1,0 +1,3 @@
+The cli_test.py is the script that performs the unit testing for the cli, 
+check_requests.py and parser.py are the units being tested. Check_requests.py cannot be found 
+as is in the cli.py since parts of it need to be changed in order to communicate with the API.

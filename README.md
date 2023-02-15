@@ -57,4 +57,6 @@ Linux, MacOS (Bash)
 If you installed it all correctly and the server is running, the Chrome page should appear.Enjoy!
 
 # CLI 
-
+Before using the cli the API needs to actiavted beforehand. In order to access the executable open a
+terminal and `cd ./cli/dist/cli`, this opens the correct folder. Then you can use the cli by typing into
+the same terminal commands like: `./se2215.exe  scope --param1 value1 [--param2 value2 ...] [--format fff --file fff]`. You can type `./se2215.exe` in order to see the help message, a list of all scopes and parameters.

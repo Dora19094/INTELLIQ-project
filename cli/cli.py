@@ -67,7 +67,7 @@ session_id = args.get('session_id','default')
 option_id = args.get('option_id','default')
 
 #base url of the api
-url = 'https://localhost:3001'
+url = 'https://localhost:3001/intelliq_api'
 
 #methods that require a post request
 post = ['resetall','resetq','doanswer']
@@ -81,10 +81,12 @@ if(scope == 'help'):
     print('resetq  --questionnaire_id')
     print('questionnaire  --questionnaire_id')
     print('question  --questionnaire_id  --question_id')
-    print('doasnwer  --questionnaire_id  --question_id  --session_id  --option_id')
+    print('doanswer  --questionnaire_id  --question_id  --session_id  --option_id')
     print('getsessionanswers  --questionnaire_id  --session_id')
     print('getquestionanswers  --questionnaire_id  --question_id')
     print('questions_data --questionnaire_id')
+    print('--file is a parameter that allows you to choose a file to print the results to instead \nof using the default standard out')
+    print('--format is a parameter that accepts two values <json> and <csv>, this lets you control \nthe form in which the results are returned, defaults to json if it is omitted or an invalid type is given')
     sys.exit(0)
 #each elif forms url based on the specified method and checks if any parameters are missing
 elif(scope == 'healthcheck'):
@@ -133,6 +135,7 @@ elif(scope == 'getquestionanswers'):
     if (questionnaire_id == 'default' or question_id == 'default'):
         print('An argument was not given, run the program without any arguments to see the help message' )
         sys.exit(0)
+    #check if the question exists before forming the url
     check_url = url + '/question/' + questionnaire_id + '/' + question_id
     x = requests.get(check_url, verify = False)
     if(x.status_code != 200):
