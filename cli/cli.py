@@ -81,7 +81,7 @@ if(scope == 'help'):
     print('resetq  --questionnaire_id')
     print('questionnaire  --questionnaire_id')
     print('question  --questionnaire_id  --question_id')
-    print('doanwer  --questionnaire_id  --question_id  --session_id  --option_id')
+    print('doasnwer  --questionnaire_id  --question_id  --session_id  --option_id')
     print('getsessionanswers  --questionnaire_id  --session_id')
     print('getquestionanswers  --questionnaire_id  --question_id')
     print('questions_data --questionnaire_id')
@@ -233,15 +233,15 @@ elif(scope == 'questions_data'):
 else:
     print('scope does not exit, run the program without any arguments to see the help message')
     sys.exit(0)
-if (scope in post):
+if (scope in post): #request for methods that require post
     x = requests.post(url,verify = False)
-elif(scope == 'questionnaire_upd'):
+elif(scope == 'questionnaire_upd'): #request for questionnaire_upd
     data = json.load(f)
     data = json.dumps(data)
     x = requests.post(url,files = {'file': (None,data)},verify = False)
-else:
+else: #request for get methods, all the url have been cofigured from lines 90-142
     x = requests.get(url,verify = False)
 code = x.status_code
-if(scope != 'doanswer'):
-    result_handler(x,format)
-error_code_handler(code)
+if(scope != 'doanswer'):#do answer does not have a result object, all other methods 
+    result_handler(x,format) #results are handled by this function
+error_code_handler(code)#print message according to error code
