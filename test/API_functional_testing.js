@@ -1,5 +1,5 @@
 //This is the scripts for API functional testing using Postman.
-
+//{baseURL} = https://localhost:3001/intelliq_api/
 //{baseURL}/questionnaire/:questionnaireID
 
 pm.test("Status code is 200", function () {

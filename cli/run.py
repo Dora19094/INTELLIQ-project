@@ -1,6 +1,6 @@
 import subprocess
 
-path = "./dist/cli/cli.exe"
+path = "./dist/cli/se2215.exe"
 questionnaire_id = '63ebae2cc136b8e798c7dc65'
 
 print("----------------------------------------------------------------------------------------------")
@@ -11,7 +11,7 @@ input("\nPress Enter to continue\n")
 print("----------------------------------------------------------------------------------------------")
 print("Show Blank\n")
 subprocess.run(path + ' questionnaire --questionnaire_id ' + questionnaire_id)
-question_id = input("Pick a question that you want to see all answers over multiple sessions for later use: ")
+input("\nPress Enter to continue\n")
 print()
 
 print("----------------------------------------------------------------------------------------------")
@@ -104,6 +104,7 @@ input("Press enter to continue")
 
 print("----------------------------------------------------------------------------------------------")
 print("Show all answers of a question over all sessions")
+question_id = input("Pick a question that you want to see all answers over multiple sessions: ")
 subprocess.run(path + ' getquestionanswers --questionnaire_id ' + questionnaire_id + ' --question_id ' + question_id)
 input('\nPress Enter to continue\n')
 
