@@ -18,7 +18,7 @@ output = result.stdout.decode().strip()
 print(output)
 
 # Here we are defining the expected JSON document as a string.
-expected_json = '{"status": "OK", "dbconnection": "mongodb://127.0.0.1/intelliQ The request was successful"} '
+expected_json = '{"status": "OK", "dbconnection": "mongodb://127.0.0.1/intelliQ"}'
 
 if check_json(expected_json, output):
     print("The .exe file returned the expected JSON document.")

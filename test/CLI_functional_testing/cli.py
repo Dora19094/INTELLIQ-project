@@ -247,4 +247,4 @@ else: #request for get methods, all the url have been cofigured from lines 90-14
 code = x.status_code
 if(scope != 'doanswer'):#do answer does not have a result object, all other methods 
     result_handler(x,format) #results are handled by this function
-error_code_handler(code)#print message according to error code
+#error_code_handler(code)#print message according to error code
