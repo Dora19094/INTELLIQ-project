@@ -1,4 +1,5 @@
-#getsessionanswers/63e9404266b76729edd6d133/ekis
+#{baseURL} = https://localhost:3001/intelliq_api/
+#{baseURL}/getsessionanswers/:questionnaireID/:session
 import subprocess
 from io import BytesIO
 import os

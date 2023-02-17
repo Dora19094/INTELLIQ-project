@@ -1,4 +1,5 @@
-#getquestionanswers/63e9404266b76729edd6d133/P00
+#{baseURL} = https://localhost:3001/intelliq_api/
+#{baseURL}/getquestionanswers/:questionnaireID/:questionID
 import subprocess
 from io import BytesIO
 import os

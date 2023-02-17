@@ -1,3 +1,5 @@
+#{baseURL} = https://localhost:3001/intelliq_api/
+#{baseURL}/question/:questionnaireID/:questionID
 import subprocess
 from io import BytesIO
 import os
