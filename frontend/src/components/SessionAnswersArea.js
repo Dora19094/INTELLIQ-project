@@ -17,7 +17,7 @@ export default function SessionAnswersArea() {
 
   // d. {baseURL}/getsessionanswers/:questionnaireID/:session
  useEffect(() => {
-    const url = `https://localhost:3001/getsessionanswers/${questionnaireID}/${session}`;
+    const url = `https://localhost:3001/intelliq_api/getsessionanswers/${questionnaireID}/${session}`;
     
     const fetchData = async () => {
       await fetch(url)

@@ -1,6 +1,6 @@
 # Software Engineering Project 2022-2023
 
-Group: softeng2022-25
+Group: softeng2022-15
 Members: 
 el19950 Argyro Tsipi 
 el19094 Theodora Boutsini
@@ -30,9 +30,7 @@ Open the folder in VS Code(preferred) or the code editor you usually use.
 Download MongoDB Community Server. You can use the link : https://www.mongodb.com/try/download/community. 
 Download also MongoDB Compass. You can use the link : https://www.mongodb.com/try/download/compass.
 Open the MongodB Compass and click on connect making sure the uri is : mongodb://localhost:27017.
-To put data into the database you import the files that are in the folder: ./data.
-You import the blank questionnaires(Blank1.json, Blank2.json) in a collection named "blanks" and the you import the answers
-of the questionnaires(Answered1.json, Answered2.json) in a collection named "answers". 
+To load data into the database you import into the collection "blanks" the file ./data/Final/blank.json and into the collection "answers" the file ./data/Final/answer.json. 
 
 # Backend-API
 Open the Window's Powershell terminal in VS Code and type `cd ./api-backend`.Then run the following command:
@@ -57,7 +55,7 @@ Linux, MacOS (Bash)
 If you installed it all correctly and the server is running, the Chrome page should appear.Enjoy!
 
 # CLI 
-Before using the cli the API needs to actiavted beforehand. In order to access the executable open a
+Before using the cli the API needs to be activated beforehand. In order to access the executable open a
 terminal and `cd ./cli/dist/cli`, this opens the correct folder. Then you can use the cli by typing into
 the same terminal commands like: 
 `./se2215.exe  scope --param1 value1 [--param2 value2 ...] [--format fff --file fff]`. 
