@@ -1,3 +1,6 @@
+//IGONORE THIS FILE.THIS WAS A BACK-UP.
+//THE Postman API functional testing is the json file in the same folder(/test).
+
 //This is the scripts for API functional testing using Postman.
 //{baseURL} = https://localhost:3001/intelliq_api/
 //{baseURL}/questionnaire/:questionnaireID
