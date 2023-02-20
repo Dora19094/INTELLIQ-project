@@ -1,0 +1,339 @@
+{
+	"info": {
+		"_postman_id": "427e2894-73a8-4926-ad62-ac67bb6c0e6e",
+		"name": "SOFTENG22-15",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "24699038-427e2894-73a8-4926-ad62-ac67bb6c0e6e"
+	},
+	"item": [
+		{
+			"name": "{baseURL}/questionnaire/:questionnaireID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ada0d8d-eb1e-4727-9e71-cd7a33bad902",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"JSON data is not empty\", function () {\r",
+							"    pm.expect(jsonData).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the content of the JSON response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.questionnaireTitle).to.equal(\"Online Shopping attitudes\");\r",
+							"    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "b68ed96c-c913-495d-8fa3-8dbacbf6d741",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/intelliq_api/questionnaire/63e9405366b76729edd6d135",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"intelliq_api",
+						"questionnaire",
+						"63e9405366b76729edd6d135"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{baseURL}/question/:questionnaireID/:questionID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9adb1f66-98b9-4cf5-aa66-5e3fc6264f14",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"JSON data is not empty\", function () {\r",
+							"    pm.expect(jsonData).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "259c55ae-2afe-4936-8034-44cc3b9c0b9c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/intelliq_api/question/63e9404266b76729edd6d133/P00",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"intelliq_api",
+						"question",
+						"63e9404266b76729edd6d133",
+						"P00"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{baseURL}/getsessionanswers/:questionnaireID/:session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "baff0c4a-6cc5-4bd8-85b3-86245ec990b0",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"JSON data is not empty\", function () {\r",
+							"    pm.expect(jsonData).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "665bd3bc-494f-4a4b-a237-64aa725cdd2e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/intelliq_api/getsessionanswers/63e9404266b76729edd6d133/tHbl",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"intelliq_api",
+						"getsessionanswers",
+						"63e9404266b76729edd6d133",
+						"tHbl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{baseURL}/getquestionanswers/:questionnaireID/:questionID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07147093-a0ce-4f1e-bff9-54809e2b41f4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"JSON data is not empty\", function () {\r",
+							"    pm.expect(jsonData).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "338badc1-2b69-4c04-ade1-428e55b16a6e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/intelliq_api/getquestionanswers/63e9404266b76729edd6d133/P00",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"intelliq_api",
+						"getquestionanswers",
+						"63e9404266b76729edd6d133",
+						"P00"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{baseURL}/doanswer/:questionnaireID/:questionID/:session/:optionID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b910d408-1ae3-4d81-94c4-46196e5972af",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "879411c7-0270-4347-a238-22593e66d3d5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"optID\":\"P01A4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3001/intelliq_api/doanswer/63e9405366b76729edd6d135/P01/ABCF/P01A4",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"intelliq_api",
+						"doanswer",
+						"63e9405366b76729edd6d135",
+						"P01",
+						"ABCF",
+						"P01A4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Extra endpoint_works",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "054a92b6-4173-41df-9cb7-a2a7031af551",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"JSON data is not empty\", function () {\r",
+							"    pm.expect(jsonData).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c9888a25-276d-42a4-969b-946127eae774",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3001/intelliq_api/questionnaires",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"intelliq_api",
+						"questionnaires"
+					]
+				},
+				"description": "Emfanizei ola ta questionnaires"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9be8a888-ee6d-4d6c-98d9-01f78e656e61",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "58966669-8e65-4200-a76c-e473855a2281",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
