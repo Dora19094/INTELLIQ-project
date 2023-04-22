@@ -63,3 +63,4 @@ You can type `./se2215.exe` in order to see the help message, a list of all scop
 This executable was made in order for the cli to run without python and its libraries, the python script 
 is in the cli forder, named cli.py and can be used instead of the executable if the necessary libraries 
 are installed.
+# INTELLIQ-project
